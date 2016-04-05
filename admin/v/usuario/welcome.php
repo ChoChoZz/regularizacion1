@@ -1,6 +1,8 @@
 <?php 
 session_start();
-if(!isset($_SESSION['usuario'])){
+if(isset($_SESSION['usuario']) && ($_SESSION['tipoUsuario'] == "Administrador" || $_SESSION['tipoUsuario'] == "Super administrador")){
+}
+else{
   header('Location: ../../');
 }
 ?>
