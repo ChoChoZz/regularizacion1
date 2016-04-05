@@ -1,0 +1,32 @@
+<?php
+session_start();
+header('Content-Type: text/html; charset=UTF-8');
+require '../m/curso.php';
+
+
+
+$id = $_GET['id'];
+
+$curso = verCurso($id);
+if(isset($curso)){
+	unset($_SESSION['idCurso']);
+	unset($_SESSION['nombreCurso']);
+	unset($_SESSION['descripcionCurso']);
+	unset($_SESSION['temarioCurso']);
+	unset($_SESSION['urlCurso']);
+	unset($_SESSION['imagenCurso']);
+
+	$_SESSION['idCurso'] = $curso[0];
+	$_SESSION['nombreCurso'] = $curso[1];
+	$_SESSION['descripcionCurso'] = $curso[2];
+	$_SESSION['temarioCurso'] = $curso[3];
+	$_SESSION['urlCurso'] = $curso[4];
+	$_SESSION['imagenCurso'] = $curso[5];
+	header('Location: ../v/curso/editCourse.php');
+}
+else{
+	header('Location: ../v/curso/viewCourse.php');
+}
+
+
+?>
