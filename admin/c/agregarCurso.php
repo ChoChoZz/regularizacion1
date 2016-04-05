@@ -108,7 +108,7 @@ else{
 	if($guardarImagen){
 		$guardarRegistro = agregarCurso($nombre, $descripcion, null, $link, "$id.$extensionImagen");
 		if($guardarRegistro){
-			$carpeta = main($nombre, $descripcion, null, $link, "$id.$extensionImagen");
+			$carpeta = main($id, $nombre, $descripcion, null, $link, "$id.$extensionImagen");
 			if($carpeta){
 				echo true;
 				exit();

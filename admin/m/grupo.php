@@ -136,6 +136,24 @@ function verGrupo($id){
 	$mysqli = new mysqli('localhost', 'root', 'root', 'preparac_regularizacion');
 
 	$result = $mysqli->query("Select GRUPO.idGrupo, SUCURSAL.nombre as sucursal, CURSO.nombre as curso, GRUPO.nombre as grupo, GRUPO.capacidad, GRUPO.costo, GRUPO.periodoInscripcion as inscripcion from GRUPO join SUCURSAL on SUCURSAL.idSucursal = GRUPO.SUCURSAL_idsucursal join CURSO on GRUPO.CURSO_idcurso = CURSO.idCurso where GRUPO.idGrupo = $id;");
+
+
+
+	$result1 = $mysqli->query("SELECT COUNT(*) FROM GRUPO_has_USUARIO WHERE GRUPO_idgrupo=$id;");
+	if($row1 = $result1->fetch_array()){
+		$registrados = $row1[0];
+	}
+	else{
+			return false;
+	}
+
+	$result2 = $mysqli->query("SELECT COUNT(*) FROM PAGO WHERE (estatus='Pagado' OR estatus='Medio') AND GRUPO_idgrupo=$id;");
+	if($row2 = $result2->fetch_array()){
+		$pagados = $row2[0];
+	}
+	else{
+			return false;
+	}
 	$mysqli->close();
 
 	if($row = $result->fetch_array()){
@@ -145,7 +163,7 @@ function verGrupo($id){
 		$capacidad = $row['capacidad'];
 		$costo = $row['costo'];
 		$inscripcion = $row['inscripcion'];
-		return array($sucursal, $curso, $grupo, $capacidad, $costo, $inscripcion);
+		return array($sucursal, $curso, $grupo, $capacidad, $costo, $inscripcion, $pagados, $registrados);
 	}
 	else{
 		return false;

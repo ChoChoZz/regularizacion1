@@ -14,6 +14,9 @@ if($_SESSION['datosGrupo']){
   $capacidad = $_SESSION['datosGrupo'][3];
   $costo = $_SESSION['datosGrupo'][4];
   $inscripcion = $_SESSION['datosGrupo'][5];
+  $pagados = $_SESSION['datosGrupo'][6];
+  $registrados = $_SESSION['datosGrupo'][7];
+  $disponibles = $registrados - $pagados;
 }
 else{
   $sucursal =  null;
@@ -21,7 +24,10 @@ else{
   $grupo = null;
   $capacidad = null;
   $costo = null;
-  $inscripcion = null; 
+  $inscripcion = null;
+  $pagados = null;
+  $registrados = null;
+  $disponibles = null;
 }
 
 if($_SESSION['datosClase']){
@@ -219,7 +225,7 @@ else{
                     <label for="store-name" class="field-label col-sm-1 ph10"><strong>Pagados: </strong></label>
 
                     <div class="col-sm-10 ph10">
-                        <label for="store-name" class="field-label col-sm-11 ph10 tleft">23</label>
+                        <label for="store-name" class="field-label col-sm-11 ph10 tleft"><?php echo $pagados; ?></label>
                     </div>
                   </div>
 
@@ -227,7 +233,7 @@ else{
                     <label for="store-name" class="field-label col-sm-1 ph10"><strong>Disponibles: </strong></label>
 
                     <div class="col-sm-10 ph10">
-                        <label for="store-name" class="field-label col-sm-11 ph10 tleft">22</label>
+                        <label for="store-name" class="field-label col-sm-11 ph10 tleft"><?php echo $disponibles; ?></label>
                     </div>
                   </div>
 
@@ -235,7 +241,7 @@ else{
                     <label for="store-name" class="field-label col-sm-1 ph10"><strong>Registrados: </strong></label>
 
                     <div class="col-sm-10 ph10">
-                        <label for="store-name" class="field-label col-sm-11 ph10 tleft">28</label>
+                        <label for="store-name" class="field-label col-sm-11 ph10 tleft"><?php echo $registrados; ?></label>
                     </div>
                   </div>
 
