@@ -82,4 +82,12 @@ function borrarClaseEditar($id){
 	$mysqli->close();
 	return $result;
 }
+
+function editarClase($idClase, $clase, $fecha, $horaInicio, $horaFin){
+	//$mysqli = new mysqli('localhost', 'preparac_reguIPN', ',+.^ZV[PvE.P]+keKM', 'preparac_regularizacion');
+	$mysqli = new mysqli('localhost', 'root', 'root', 'preparac_regularizacion');
+	$result = $mysqli->query("UPDATE clase SET nombre = '$clase', fecha = '$fecha', horaInicio = '$horaInicio', horaFin = '$horaFin' WHERE idClase = $idClase;");
+	$mysqli->close();
+	return $result;
+}
 ?>

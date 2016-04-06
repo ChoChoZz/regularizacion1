@@ -219,70 +219,77 @@ function buscarGrupoPorSucursal($idSucursal){
 
 function mostrarClases($idGrupo){
 
-		$conn = new mysqli("localhost", "root", "root", "preparac_regularizacion");
+	$conn = new mysqli("localhost", "root", "root", "preparac_regularizacion");
 		//$conn = new mysqli('localhost', 'preparac_reguIPN', ',+.^ZV[PvE.P]+keKM', 'preparac_regularizacion');
 		//linea para escapar acentos
-		mysql_query("SET NAMES 'utf8'");
+	mysql_query("SET NAMES 'utf8'");
 
-		if (mysqli_connect_errno()) {
-		    printf("Conexion fallida: %s\n", mysqli_connect_error());
-		    $conn->close();
-		    return NULL;
-		}
-
-		$result = $conn->query("SELECT nombre, DATE_FORMAT(fecha, '%w') AS diaSemana, DATE_FORMAT(fecha, '%d ') AS numeroDia, DATE_FORMAT(fecha, '%c') AS mes, DATE_FORMAT(horaInicio,'%h:%i %p') AS inicio, DATE_FORMAT(horaFin,'%h:%i %p') AS fin FROM CLASE WHERE GRUPO_idgrupo ='$idGrupo';");
-
-		if ($result->num_rows > 0) {
-			$conn->close();
-			return $result;
-		} else if($result->num_rows == 0){
-			$conn->close();
-			return 0;
-		}
+	if (mysqli_connect_errno()) {
+		printf("Conexion fallida: %s\n", mysqli_connect_error());
+		$conn->close();
+		return NULL;
 	}
 
-	function obtenerInformacionGrupo($idGrupo){
-		$conn = new mysqli("localhost", "root", "root", "preparac_regularizacion");
+	$result = $conn->query("SELECT nombre, DATE_FORMAT(fecha, '%w') AS diaSemana, DATE_FORMAT(fecha, '%d ') AS numeroDia, DATE_FORMAT(fecha, '%c') AS mes, DATE_FORMAT(horaInicio,'%h:%i %p') AS inicio, DATE_FORMAT(horaFin,'%h:%i %p') AS fin FROM CLASE WHERE GRUPO_idgrupo ='$idGrupo';");
+
+	if ($result->num_rows > 0) {
+		$conn->close();
+		return $result;
+	} else if($result->num_rows == 0){
+		$conn->close();
+		return 0;
+	}
+}
+
+function obtenerInformacionGrupo($idGrupo){
+	$conn = new mysqli("localhost", "root", "root", "preparac_regularizacion");
 		//$conn = new mysqli('localhost', 'preparac_reguIPN', ',+.^ZV[PvE.P]+keKM', 'preparac_regularizacion');
 		//linea para escapar acentos
-		mysql_query("SET NAMES 'utf8'");
+	mysql_query("SET NAMES 'utf8'");
 
-		if (mysqli_connect_errno()) {
-		    printf("Conexion fallida: %s\n", mysqli_connect_error());
-		    $conn->close();
-		    return NULL;
-		}
-
-		$result = $conn->query("SELECT * FROM GRUPO WHERE idGrupo='$idGrupo';");
-
-		if ($result->num_rows > 0) {
-			$conn->close();
-			return $result;
-		} else if($result->num_rows == 0){
-			$conn->close();
-			return 0;
-		}
+	if (mysqli_connect_errno()) {
+		printf("Conexion fallida: %s\n", mysqli_connect_error());
+		$conn->close();
+		return NULL;
 	}
+
+	$result = $conn->query("SELECT * FROM GRUPO WHERE idGrupo='$idGrupo';");
+
+	if ($result->num_rows > 0) {
+		$conn->close();
+		return $result;
+	} else if($result->num_rows == 0){
+		$conn->close();
+		return 0;
+	}
+}
 
 function mostrarTodosGrup(){
-		$conn = new mysqli("localhost", "root", "root", "preparac_regularizacion");
+	$conn = new mysqli("localhost", "root", "root", "preparac_regularizacion");
 		//$conn = new mysqli('localhost', 'preparac_reguIPN', ',+.^ZV[PvE.P]+keKM', 'preparac_regularizacion');
 
-		if (mysqli_connect_errno()) {
-		    printf("Conexion fallida: %s\n", mysqli_connect_error());
-		    $conn->close();
-		    return NULL;
-		}
-
-		$result = $conn->query("SELECT * FROM GRUPO;");
-
-		if ($result->num_rows > 0) {
-			$conn->close();
-			return $result;
-		} else if($result->num_rows == 0){
-			$conn->close();
-			return 0;
-		}
+	if (mysqli_connect_errno()) {
+		printf("Conexion fallida: %s\n", mysqli_connect_error());
+		$conn->close();
+		return NULL;
 	}
 
+	$result = $conn->query("SELECT * FROM GRUPO;");
+
+	if ($result->num_rows > 0) {
+		$conn->close();
+		return $result;
+	} else if($result->num_rows == 0){
+		$conn->close();
+		return 0;
+	}
+}
+
+function editarGrupo($idGrupo, $grupo, $capacidad, $costo, $periodoInscripcion, $fechaPago, $idSucursal, $idCurso){
+	//$mysqli = new mysqli('localhost', 'preparac_reguIPN', ',+.^ZV[PvE.P]+keKM', 'preparac_regularizacion');
+	$mysqli = new mysqli('localhost', 'root', 'root', 'preparac_regularizacion');
+	$result = $mysqli->query("UPDATE GRUPO SET nombre = '$grupo', capacidad = '$capacidad', costo = '$costo', periodoInscripcion = '$periodoInscripcion', fechaPago = '$fechaPago', SUCURSAL_idsucursal = '$idSucursal', CURSO_idcurso = '$idCurso' WHERE idGrupo = $idGrupo;");
+	$mysqli->close();
+	return $result;
+}
 ?>

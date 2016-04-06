@@ -43,8 +43,6 @@ else{
   $horaInicio = null;
   $horaFin = null;
 }
-unset($_SESSION['datosGrupo']);
-unset($_SESSION['datosClase']);
 ?>
 <!DOCTYPE html>
 <html>
@@ -172,7 +170,7 @@ unset($_SESSION['datosClase']);
                         </a>
                     </li>
                     <li class="crumb-link">
-                        Registrar grupo
+                        Editar grupo
                     </li>
                 </ol>
             </div>
@@ -186,7 +184,7 @@ unset($_SESSION['datosClase']);
               <div class="panel">
                   <div class="panel-heading">
                     <span class="panel-title">
-                      Registrar grupo
+                      Editar grupo
                     </span>
                   </div>
                   <!-- end .form-header section -->
@@ -244,6 +242,17 @@ unset($_SESSION['datosClase']);
                               <label for="date" class="field prepend-icon">
                                   <input type="text" name="periodoInscripcion" id="periodoInscripcion" class="gui-input" placeholder="Per&iacute;odo de inscripci&oacute;n" value="<?php echo $periodoInscripcion; ?>">
                                   <label for="date" class="field-icon">
+                                      <i class="fa fa-calendar"></i>
+                                  </label>
+                              </label>
+                          </div>
+                          <br>
+                          <div class="section">
+                              <label for="datepicker1" class="field prepend-icon">
+                                  <input type="date" id="fechaLimite" name="fechaLimite"
+                                         class="gui-input"
+                                         placeholder="Fecha de l&iacute;mite de pago (10/23/2016)" value="<?php echo $fechaPago; ?>">
+                                  <label class="field-icon">
                                       <i class="fa fa-calendar"></i>
                                   </label>
                               </label>
@@ -312,7 +321,7 @@ unset($_SESSION['datosClase']);
                           <div class="panel" id="spy5">
                             <div class="panel-heading">
                                 <div class="pull-right hidden-xs">
-                                    <code class="mr20">Recuerda que si te equivocas solo necesitas eliminar la clase que agregaste mal, no te preocupes el orden que muestra la tabla yo me encargare de acomodarlos en orden durante el registro</code>
+                                    <code class="mr20">Recuerda que si te equivocas solo necesitas eliminar la clase que agregaste mal, no te preocupes el orden que muestra la tabla yo me encargare de acomodarlos durante el registro</code>
                                 </div>
                             </div>
                             <div class="panel-body pn">
@@ -327,16 +336,8 @@ unset($_SESSION['datosClase']);
                                       <th class="tcenter">Eliminar</th>
                                   </tr>
                                   </thead>
-                                  <tbody>
-                                  <?php for($i=0; $i<count($idClase); $i++){ ?>
-                                  <tr>
-                                      <td class="tcenter"><input type="text" class="gui-input" value="<?php echo $clase[$i]; ?>"></td>
-                                      <td class="tcenter"><input type="date" class="gui-input" value="<?php echo $fecha[$i]; ?>"></td>
-                                      <td class="tcenter"><input type="time" class="gui-input" value="<?php echo $horaInicio[$i]; ?>"></td>
-                                      <td class="tcenter"><input type="time" class="gui-input" value="<?php echo $horaFin[$i]; ?>"></td>
-                                      <td class="tcenter"><button type="button" class="btn btn-danger"><i class="fa fa-trash-o"></i></button></td>
-                                  </tr>
-                                  <?php } ?>
+                                  <tbody id="tablaClases">
+                                  
                                   </tbody>
                                 </table>
                               </div>
@@ -346,8 +347,8 @@ unset($_SESSION['datosClase']);
 
                           <div class="section">
                               <div class="pull-right">
-                                  <a href="./createTemplate.html" class="btn btn-gradient btn-system">Actualizar grupo
-                                  </a>
+                                  <button type="submit" class="btn btn-gradient btn-system">Actualizar grupo
+                                  </button>
                               </div>
                           </div>
                           <!-- end section -->
@@ -396,6 +397,40 @@ unset($_SESSION['datosClase']);
           </div>
           <div class="modal-body">
             <label>Error al eliminar el registro.</label>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+          </div> 
+        </div>
+      </div>
+    </div>
+
+    <div id="registroCorrecto"  class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="exampleModalLabel">Registro editado</h4>
+          </div>
+          <div class="modal-body">
+            <label>El registro se actualizó correctamente.</label>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+          </div> 
+        </div>
+      </div>
+    </div>
+
+    <div id="errorRegistro"  class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="exampleModalLabel">Error</h4>
+          </div>
+          <div class="modal-body">
+            <label>El registro no se actualizó.</label>
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
@@ -464,17 +499,15 @@ function getClases(idGrupo){
       var horaInicio = datos[3].split("¬");
       var horaFin = datos[4].split("¬");
       var str ="";
-      var tabla = document.getElementById('tablaEditar');
-      tabla.innerHTML = "";
+      var tabla = document.getElementById('tablaClases');
+      
       for(i=0; i<idClase.length; i++){
-        str += '<tr><td class="tcenter"><input type="text" class="gui-input" value="'+clase[i]+'"></td><td class="tcenter"><input type="date" class="gui-input" value="'+fecha[i]+'"></td><td class="tcenter"><input type="time" class="gui-input" value="'+horaInicio[i]+'"></td><td class="tcenter"><input type="time" class="gui-input" value="'+horaFin[i]+'"></td><td class="tcenter"><button type="button" class="btn btn-danger" onclick="modalEliminar('+idClase[i]+');" value="xxx"><i class="fa fa-trash-o"></i></button></td></tr>';
+        str += '<tr><td class="tcenter"><input name="clases"  data-id="'+idClase[i]+'" type="text" class="gui-input" value="'+clase[i]+'"></td><td class="tcenter"><input type="date" class="gui-input" value="'+fecha[i]+'" name="fechaClase"></td><td class="tcenter"><input type="time" class="gui-input" value="'+horaInicio[i]+'" name="inicioClase"></td><td class="tcenter"><input type="time" class="gui-input" value="'+horaFin[i]+'" name="finClase"></td><td class="tcenter"><button type="button" class="btn btn-danger" onclick="modalEliminar('+idClase[i]+');"><i class="fa fa-trash-o"></i></button></td></tr>';
       }
-      if(clase[0] != ""){
-        tabla.innerHTML = str;
+      if(idClase[0] == ""){
+        str = "";
       }
-      else{
-        tabla.innerHTML = "";
-      }
+      tabla.innerHTML = str;
     }
   });
 }
@@ -511,14 +544,18 @@ function getCatalogos(){
         if(idSucursal[i] == <?php echo $idSucursal; ?>){
           strSucursal += "<option value='"+idSucursal[i]+"' selected>"+sucursales[i]+"</option>";
         }
-        strSucursal += "<option value='"+idSucursal[i]+"'>"+sucursales[i]+"</option>";
+        else{
+                strSucursal += "<option value='"+idSucursal[i]+"'>"+sucursales[i]+"</option>";
+            }
       }
 
       for(i=0; i<idCurso.length; i++){
         if(idCurso[i] == <?php echo $idCurso; ?>){
           strCurso += "<option value='"+idCurso[i]+"' selected>"+cursos[i]+"</option>";
         }
-        strCurso += "<option value='"+idCurso[i]+"'>"+cursos[i]+"</option>";
+        else{
+          strCurso += "<option value='"+idCurso[i]+"'>"+cursos[i]+"</option>";
+        }
       }
 
       selectSucursal.innerHTML = strSucursal;
@@ -527,6 +564,102 @@ function getCatalogos(){
   });
 }
 
-getCatalogos();
+$("#form-register").validate({
+  errorClass: "state-error",
+  validClass: "state-success",
+  errorElement: "em",
+  rules:{
+    sucursal:{required: true},
+    curso:{required: true},
+    grupo:{required: true, maxlength: 60},
+    capacity:{required: true, min:1},
+    cost:{required: true, min:1},
+    periodoInscripcion:{required: true, maxlength:50},
+    fechaLimite:{required: true}
+  },
+  messages:{
+    sucursal:{required: "Campo requerido"},
+    curso:{required: "Campo requerido"},
+    grupo:{required: "Campo requerido", maxlength: "Máximo 60 caracteres"},
+    capacity:{required: "Campo requerido", min: "Valor mínimio 1"},
+    cost:{required: "Campo requerido", min: "Valor mínimio 1"},
+    periodoInscripcion:{required: "Campo requerido", maxlength:"Máximo 50 caracteres"},
+    fechaLimite:{required: "Campo requerido"}
+  },
+  submitHandler: function(form){
+    if($('#tablaClases').html() == ''){
+      $('#errorClase').modal('show');
+      return;
+    }
+
+
+    var sucursal = document.getElementById('sucursal').value;
+    var curso = document.getElementById('curso').value;
+    var grupo = document.getElementById('grupo').value;
+    var capacidad = document.getElementById('capacity').value;
+    var costo = document.getElementById('cost').value;
+    var periodoInscripcion = document.getElementById('periodoInscripcion').value;
+    var fechaLimite = document.getElementById('fechaLimite').value;
+
+    var tabla = document.getElementById('tablaClases');
+    var idClases = new Array();
+    var clases = new Array();
+    var fechaClase = new Array();
+    var inicioClase = new Array();
+    var finClase = new Array();
+
+    for(i=0; i<tabla.rows.length; i++){
+      idClases.push(document.getElementsByName('clases')[i].getAttribute("data-id"));
+      clases.push(document.getElementsByName('clases')[i].value);
+      fechaClase.push(document.getElementsByName('fechaClase')[i].value);
+      inicioClase.push(document.getElementsByName('inicioClase')[i].value);
+      finClase.push(document.getElementsByName('finClase')[i].value);
+    }
+
+    idClases = JSON.stringify(idClases);
+    clases = JSON.stringify(clases);
+    fechaClase = JSON.stringify(fechaClase);
+    inicioClase = JSON.stringify(inicioClase);
+    finClase = JSON.stringify(finClase);
+
+    var datos = {
+      'idGrupo': <?php echo $idGrupo; ?>,
+      'sucursal': sucursal, 
+      'curso': curso, 
+      'grupo': grupo, 
+      'capacidad': capacidad, 
+      'costo': costo, 
+      'periodoInscripcion': periodoInscripcion, 
+      'fechaLimite': fechaLimite, 
+      'idClases': idClases,
+      'clases': clases,
+      'fechaClase': fechaClase,
+      'inicioClase': inicioClase,
+      'finClase': finClase
+    };
+    $.ajax({
+      data: datos,
+      type: 'POST',
+      async: true,
+      url: "../../c/actualizarGrupo.php",
+      success: function(resp){
+        if(resp == 1){
+          $('#registroCorrecto').modal('show');
+        }
+        else{
+          $('#errorRegistro').modal('show');
+        }
+        console.log(resp);
+      }
+    });
+  }
+});
+
+$('#registroCorrecto').on('hidden.bs.modal', function (e){
+  window.location = "employability.php";
+});
+
+getCatalogos(); 
+getClases(<?php echo $idGrupo; ?>);
 </script>
 </html>
