@@ -271,7 +271,7 @@ else{
                           <div class="section">
                               <p>Nombre de la clase: </p>
                               <label for="name" class="field prepend-icon">
-                                  <input type="text" name="name" id="name" class="gui-input" placeholder="Ej. Clase 1">
+                                  <input type="text" name="name" id="clase" class="gui-input" placeholder="Ej. Clase 1">
                                   <label for="name" class="field-icon">
                                       <i class="fa fa-bookmark"></i>
                                   </label>
@@ -281,7 +281,7 @@ else{
                           <div class="section">
                               <p>Fecha:</p>
                               <label for="datepicker1" class="field prepend-icon">
-                                  <input type="date" id="datepicker1" name="datepicker1"
+                                  <input type="date" id="fechaClase" name="datepicker1"
                                          class="gui-input"
                                          placeholder="Ej. 10/23/2016">
                                   <label class="field-icon">
@@ -293,7 +293,7 @@ else{
                           <div class="section">
                               <p>Hora de inicio: </p>
                               <label for="timepicker1" class="field prepend-icon">
-                                  <input type="time" id="timepicker1" name="timepicker1"
+                                  <input type="time" id="horaInicio" name="timepicker1"
                                          class="gui-input"
                                          placeholder="Ej. 12:00">
                                   <label class="field-icon">
@@ -305,7 +305,7 @@ else{
                           <div class="section">
                               <p>Hora de fin:</p>
                               <label for="timepicker1" class="field prepend-icon">
-                                  <input type="time" id="timepicker1" name="timepicker1"
+                                  <input type="time" id="horaFin" name="timepicker1"
                                          class="gui-input"
                                          placeholder="El. 16:30">
                                   <label class="field-icon">
@@ -314,7 +314,7 @@ else{
                               </label>
                           </div>
 
-                          <button type="button" class="btn btn-gradient btn-sm btn-dark">Registrar clase</button>
+                          <button type="button" class="btn btn-gradient btn-sm btn-dark" onclick="agregarClase();">Registrar clase</button>
 
                           <br><br><br><br>
 
@@ -370,7 +370,7 @@ else{
 
     </section>
     <!-- End: Content-Wrapper -->
-<div id="confirmarEliminar"  class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
+    <div id="confirmarEliminar"  class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
@@ -431,6 +431,23 @@ else{
           </div>
           <div class="modal-body">
             <label>El registro no se actualizó.</label>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+          </div> 
+        </div>
+      </div>
+    </div>
+
+    <div id="agregarClaseIncorrecto"  class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="exampleModalLabel">Error</h4>
+          </div>
+          <div class="modal-body">
+            <label>Error al agregar la clase, recuerda que todos los campos son requeridos.</label>
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
@@ -639,7 +656,7 @@ $("#form-register").validate({
     };
     $.ajax({
       data: datos,
-      type: 'POST',
+      method: 'POST',
       async: true,
       url: "../../c/actualizarGrupo.php",
       success: function(resp){
@@ -658,6 +675,36 @@ $("#form-register").validate({
 $('#registroCorrecto').on('hidden.bs.modal', function (e){
   window.location = "employability.php";
 });
+
+function agregarClase(){
+  var idGrupo = <?php echo $idGrupo; ?>;
+  var clase = document.getElementById('clase').value;
+  var fecha = document.getElementById('fechaClase').value;
+  var horaInicio = document.getElementById('horaInicio').value;
+  var horaFin = document.getElementById('horaFin').value;
+
+  if(clase == '' || fecha == '' || horaInicio == '' || horaFin == ''){
+    $('#agregarClaseIncorrecto').modal('show');
+  }
+  else{
+    datos = {'idGrupo': idGrupo, 'clase': clase, 'fecha': fecha, 'horaInicio': horaInicio, 'horaFin': horaFin};
+    $.ajax({
+      async: true,
+      data: datos,
+      method: "POST",
+      url: "../../c/agregarClase.php",
+      success: function(resp){
+        if(resp == 1){
+          getClases(<?php echo $idGrupo; ?>)
+        }
+        else{
+          $('#agregarClaseIncorrecto').modal('show');
+        }
+        console.log(resp);
+      }
+    });
+  }
+}
 
 getCatalogos(); 
 getClases(<?php echo $idGrupo; ?>);
