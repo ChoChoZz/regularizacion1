@@ -267,4 +267,23 @@ function mostrarTodosGrup(){
 		}
 	}
 
+function mostrarGruposClase($idCurso){
+		$conn = new mysqli('localhost', 'preparac_reguIPN', ',+.^ZV[PvE.P]+keKM', 'preparac_regularizacion');
+		//$conn = new mysqli("localhost", "root", "root", "preparac_regularizacion");
+
+		if (mysqli_connect_errno()) {
+		    printf("Conexion fallida: %s\n", mysqli_connect_error());
+		    $conn->close();
+		    return null;
+		}
+		$result = $conn->query("SELECT idGrupo, nombre, costo FROM GRUPO WHERE estatus='Activo' AND CURSO_idcurso='$idCurso';");
+		if ($result->num_rows > 0) {
+			$conn->close();
+			return $result;
+		} else {
+			$conn->close();
+			return 0;
+		}
+	}
+
 ?>

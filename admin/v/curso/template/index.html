@@ -133,7 +133,7 @@
 							<div class="col-md-6 col-sm-6 bottommargin">
 								<div class="feature-box fbox-plain">
 									<div class="fbox-icon">
-										<a data-toggle="modal" href="#" onclick="mostrarGrupos(###id###);"><img src="http://regularizacionipn.com/images/grupos.png" alt="Concrete Developments"></a>
+										<a href="#" onclick="mostrarGrupos(###id###);"><img src="http://regularizacionipn.com/images/grupos.png" alt="Concrete Developments"></a>
 									</div>
 									<h3>Grupos</h3>
                                     <p>Consulta los grupos disponibles.</p>
@@ -198,21 +198,16 @@
 	</div><!-- #wrapper end -->
 
 	<!-- Modal -->
-	<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal fade" id="verGrupos" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 		<div class="modal-dialog">
 			<div class="modal-body">
 				<div class="modal-content">
 					<div class="modal-header">
 						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-						<h4 class="modal-title" id="myModalLabel">Grupos de c&aacute;lculo</h4>
+						<h4 class="modal-title" id="myModalLabel">Grupos</h4>
 					</div>
 					<div class="modal-body">
-						<h4 class="orange1">Grupo Cálculo matutino</h4>
-                        <p><strong>Horario: </strong>9 am – 12 pm<br><br> <strong>Clases:</strong><br> - Lunes 7 de Marzo <br> - Miércoles 9 de Marzo <br> - Jueves 10 de Marzo <br> - Lunes 14 de Marzo <br> - Miércoles 16 de Marzo <br> - Jueves 17 de Marzo <br><br> <strong>Costo:</strong> $800 <br><br> <strong>Sede:</strong> Zacatenco</p>
-						<hr>
-						<h4 class="orange1">Grupo Cálculo vespertino</h4>
-						<!--h5><strong>Vespertino</strong></h5-->
-						<p><strong>Horario: </strong>4 pm – 7 pm<br><br> <strong>Clases:</strong><br> - Lunes 7 de Marzo <br> - Miércoles 9 de Marzo <br> - Jueves 10 de Marzo <br> - Lunes 14 de Marzo <br> - Miércoles 16 de Marzo <br> - Jueves 17 de Marzo <br><br>  <strong>Costo:</strong> $800 <br><br> <strong>Sede:</strong> Zacatenco</p>
+						<div id="grupos"></div>
 					</div>
 					<div class="modal-footer">
 						<button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
@@ -240,6 +235,23 @@
       ga('create', 'UA-71843105-1', 'auto');
       ga('send', 'pageview');
 
+    </script>
+    <script type="text/javascript">
+    	function mostrarGrupos(idCurso){
+    		console.log("El idCurso es: "+idCurso);
+    		$.ajax({
+		    type: "POST",
+		    url:"../admin/c/mostrarGruposClases.php",
+		    data: {'idCurso':idCurso},
+		    success:function(response){ 
+		      console.log(response);
+		      var grupos = response;
+              var tabla = document.getElementById('grupos');
+              tabla.innerHTML = grupos;
+              $('#verGrupos').modal('show');
+		    }
+		  });
+    	}
     </script>
 </body>
 </html>
