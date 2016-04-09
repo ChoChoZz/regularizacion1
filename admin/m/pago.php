@@ -41,9 +41,22 @@ function liquidarPago($idPago, $monto){
 
 	$sql ="UPDATE PAGO SET monto = '$monto', estatus = 'Pagado' WHERE idPago='$idPago';";
 
+	/*Registro de clases para el usuario*/
 	if ($conn->query($sql) === TRUE) {
-		$result2 = $conn->query("SELECT CLASE_idclase FROM USUARIO_has_CLASE WHERE USUARIO_idusuario='$idUsuario';");
-		if($result2->num_rows > 0){
+		/*Obtenemos el numero de clases que debe tener el usuario registrado*/
+		$result4 = $conn->query("SELECT GRUPO_idgrupo FROM GRUPO_has_USUARIO where USUARIO_idusuario='$idUsuario';");
+		$clases = 0;
+
+		while($row4 = $result4->fetch_assoc()) {
+			$result5 = $conn->query("SELECT COUNT(*) as CLASES from CLASE where GRUPO_idgrupo='".$row4["GRUPO_idgrupo"]."';");
+			$row5 = $result5->fetch_assoc();
+			$clases = $clases + $row5["CLASES"];
+		}
+
+
+		$result2 = $conn->query("SELECT USUARIO_idusuario, COUNT(*) as CLASES from USUARIO_has_CLASE where USUARIO_idusuario='$idUsuario';");
+		$row2 = $result2->fetch_assoc();
+		if($row2["CLASES"] == $clases){
 			$conn->close();
  	   		return 1;
 		}else{
@@ -58,6 +71,7 @@ function liquidarPago($idPago, $monto){
 		$conn->close();
 	    return 0;
 	}
+	
 }
 
 function registrarPago($idPago, $cantidad){
@@ -71,8 +85,8 @@ function registrarPago($idPago, $cantidad){
 	}
 
 	$result1 = $conn->query("SELECT monto, USUARIO_idusuario, GRUPO_idgrupo FROM PAGO WHERE idPago='$idPago';");
-
 	$row1 = $result1->fetch_assoc();
+
 	$monto = $row1["monto"];
 	$idUsuario = $row1["USUARIO_idusuario"];
 	$idGrupo = $row1["GRUPO_idgrupo"];
@@ -82,9 +96,22 @@ function registrarPago($idPago, $cantidad){
 
 	$sql ="UPDATE PAGO SET monto = '$total', estatus = 'Medio' WHERE idPago='$idPago';";
 
+	/*Registro de clases para el usuario*/
 	if ($conn->query($sql) === TRUE) {
-		$result2 = $conn->query("SELECT CLASE_idclase FROM USUARIO_has_CLASE WHERE USUARIO_idusuario='$idUsuario';");
-		if($result2->num_rows > 0){
+		/*Obtenemos el numero de clases que debe tener el usuario registrado*/
+		$result4 = $conn->query("SELECT GRUPO_idgrupo FROM GRUPO_has_USUARIO where USUARIO_idusuario='$idUsuario';");
+		$clases = 0;
+
+		while($row4 = $result4->fetch_assoc()) {
+			$result5 = $conn->query("SELECT COUNT(*) as CLASES from CLASE where GRUPO_idgrupo='".$row4["GRUPO_idgrupo"]."';");
+			$row5 = $result5->fetch_assoc();
+			$clases = $clases + $row5["CLASES"];
+		}
+
+
+		$result2 = $conn->query("SELECT USUARIO_idusuario, COUNT(*) as CLASES from USUARIO_has_CLASE where USUARIO_idusuario='$idUsuario';");
+		$row2 = $result2->fetch_assoc();
+		if($row2["CLASES"] == $clases){
 			$conn->close();
  	   		return 1;
 		}else{
