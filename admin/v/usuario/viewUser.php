@@ -272,6 +272,53 @@ else{
         </div>
       </div>
 
+      <div id="verUsuario"  class="modal fade" tabindex="-1" role="dialog" aria-labelledby="verUsuario">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="exampleModalLabel">Datos de usuario</h4>
+              </div>
+              <div class="modal-body">
+                <label id="nombreCompleto">Nombre: </label>
+                <br>
+                <label id="sexo">Sexo: </label>
+                <br>
+                <label id="correo">Correo electrónico: </label>
+                <br>
+                <label id="telefono">Teléfono: </label>
+                <br>
+                <label id="celular">Celular: </label>
+                <br>
+                <label id="direccion">Dirección: </label>
+                <br><br>
+                <h5>Grupos</h5>
+                <div id="gruposUsuario"></div>
+             </div>
+             <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+            </div> 
+          </div>
+        </div>
+      </div>
+
+      <div id="verUsuarioError"  class="modal fade" tabindex="-1" role="dialog" aria-labelledby="verUsuario">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="exampleModalLabel">Error</h4>
+              </div>
+              <div class="modal-body">
+              <label>Error al obtener los datos de usuario, inténtalo de nuevo.</label>
+             </div>
+             <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+            </div> 
+          </div>
+        </div>
+      </div>
+
     </div>
     <!-- End: Main -->
 
@@ -395,6 +442,46 @@ else{
             }
           }
         }); 
+      }
+
+      function verUsuario(idUsuario){
+        $.ajax({
+          async: true,
+          method: 'POST',
+          data: {'id': idUsuario},
+          url: '../../c/verUsuario.php',
+          success: function(resp){
+            if(resp){
+              console.log(resp);
+              var datos = resp.split('|');
+              var nombreCompleto = document.getElementById('nombreCompleto');
+              var sexo = document.getElementById('sexo');
+              var correo = document.getElementById('correo');
+              var telefono = document.getElementById('telefono');
+              var celular = document.getElementById('celular');
+              var direccion = document.getElementById('direccion');
+              var grupos = document.getElementById('gruposUsuario');
+              var gruposUsuario = datos[7].split("#");
+              var strGrupos = "";
+
+              for(i=0; i<gruposUsuario.length;i++){
+                strGrupos += '<li>'+gruposUsuario[i]+'</li>';
+              }
+
+              nombreCompleto.innerText = nombreCompleto.innerText + datos[0];
+              sexo.innerText = sexo.innerText + datos[1];
+              correo.innerText = correo.innerText + datos[2];
+              telefono.innerText = telefono.innerText + datos[3];
+              celular.innerText = celular.innerText + datos[4];
+              direccion.innerText = direccion.innerText + datos[5];
+              grupos.innerHTML = strGrupos;
+              $('#verUsuario').modal('show');
+            }
+            else{
+              $('#verUsuarioError').modal('show');
+            }
+          }
+        });
       }
 
     </script>

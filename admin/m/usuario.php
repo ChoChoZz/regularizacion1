@@ -19,7 +19,7 @@
 		$conn->autocommit(false);
 		
 		//linea para escapar acentos
-		mysql_query("SET NAMES 'utf8'");
+		mysqli_query($conn, "SET NAMES 'utf8'");
 		/*Insert Grupo_Usuario*/
 		$result = $conn->query("INSERT INTO `preparac_regularizacion`.`USUARIO` (`idUsuario` ,`tipousuario_idtipousuario`, `nombre`, `primerApellido`, `segundoApellido`, `sexo`, `contrasena`, `correo`, `telefono`, `celular`, `cp`, `estado`, `municipio`, `colonia`, `calle`, `status`) VALUES (NULL, '$tipoUsuario', '$nombre', '$primerApellido', '$segundoApellido', '$sexo', '$contrasena', '$correo', '$telefono', '$celular', '$cp', '$estado', '$municipio', '$colonia', '$calle', '$status');");
 		
@@ -158,7 +158,7 @@
 		$conn = new mysqli("localhost", "root", "root", "preparac_regularizacion");
 
 		//linea para escapar acentos
-		mysql_query("SET NAMES 'utf8'");
+		mysqli_query($conn, "SET NAMES 'utf8'");
 
 		if (mysqli_connect_errno()) {
 		    printf("Conexion fallida: %s\n", mysqli_connect_error());
@@ -180,7 +180,7 @@
 		$conn = new mysqli("localhost", "root", "root", "preparac_regularizacion");
 
 		//linea para escapar acentos
-		mysql_query("SET NAMES 'utf8'");
+		mysqli_query($conn, "SET NAMES 'utf8'");
 
 		if (mysqli_connect_errno()) {
 		    printf("Conexion fallida: %s\n", mysqli_connect_error());
@@ -202,7 +202,7 @@
 		//$conn = new mysqli('localhost', 'preparac_reguIPN', ',+.^ZV[PvE.P]+keKM', 'preparac_regularizacion');
 		$conn = new mysqli("localhost", "root", "root", "preparac_regularizacion");
 		//linea para escapar acentos
-		mysql_query("SET NAMES 'utf8'");
+		mysqli_query($conn, "SET NAMES 'utf8'");
 		
 		if (mysqli_connect_errno()) {
 		    printf("Conexion fallida: %s\n", mysqli_connect_error());
@@ -229,7 +229,7 @@
 		//$conn = new mysqli('localhost', 'preparac_reguIPN', ',+.^ZV[PvE.P]+keKM', 'preparac_regularizacion');
 		$conn = new mysqli("localhost", "root", "root", "preparac_regularizacion");
 		//linea para escapar acentos
-		mysql_query("SET NAMES 'utf8'");
+		mysqli_query($conn, "SET NAMES 'utf8'");
 
 		if (mysqli_connect_errno()) {
 		    printf("Conexion fallida: %s\n", mysqli_connect_error());
@@ -255,7 +255,7 @@
 		//$conn = new mysqli('localhost', 'preparac_reguIPN', ',+.^ZV[PvE.P]+keKM', 'preparac_regularizacion');
 		$conn = new mysqli("localhost", "root", "root", "preparac_regularizacion");
 		//linea para escapar acentos
-		mysql_query("SET NAMES 'utf8'");
+		mysqli_query($conn, "SET NAMES 'utf8'");
 		
 		if (mysqli_connect_errno()) {
 		    printf("Conexion fallida: %s\n", mysqli_connect_error());
@@ -293,8 +293,35 @@
 			return $result;
 		} else {
 			$conn->close();
-			return 0;
+			return false;
 		}	
+	}
+
+	function verUsuario($id){
+		//$conn = new mysqli('localhost', 'preparac_reguIPN', ',+.^ZV[PvE.P]+keKM', 'preparac_regularizacion');
+		$conn = new mysqli("localhost", "root", "root", "preparac_regularizacion");
+
+		$result = $conn->query("SELECT * FROM USUARIO WHERE idUsuario=$id;");
+		$conn->close();
+		if($row = $result->fetch_array()){
+			$nombre = $row['nombre'];
+			$primerApellido = $row['primerApellido'];
+			$segundoApellido = $row['segundoApellido'];
+			$sexo = $row['sexo'];
+			$correo = $row['correo'];
+			$telefono = $row['telefono'];
+			$celular = $row['celular'];
+			$cp = $row['cp'];
+			$estado = $row['estado'];
+			$municipio = $row['municipio'];
+			$colonia = $row['colonia'];
+			$calle = $row['calle'];
+			$status = $row['status'];
+			return array($nombre, $primerApellido, $segundoApellido, $sexo, $correo, $telefono, $celular, $cp, $estado, $municipio, $colonia, $calle, $status);
+		}
+		else{
+			return false;
+		}
 	}
 
  ?>
