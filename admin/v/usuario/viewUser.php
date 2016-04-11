@@ -319,6 +319,41 @@ else{
         </div>
       </div>
 
+      <div id="errorEliminar"  class="modal fade" tabindex="-1" role="dialog" aria-labelledby="errorEliminar">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="exampleModalLabel">Error</h4>
+              </div>
+              <div class="modal-body">
+              <label>Error al eliminar los datos de usuario, inténtalo de nuevo.</label>
+             </div>
+             <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+            </div> 
+          </div>
+        </div>
+      </div>
+
+      <div id="confirmarEliminar"  class="modal fade" tabindex="-1" role="dialog" aria-labelledby="errorEliminar">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="exampleModalLabel">Eliminar</h4>
+              </div>
+              <div class="modal-body">
+              <label>¿Desea eliminar el registro?</label>
+             </div>
+             <div class="modal-footer">
+              <button type="button" class="btn btn-danger" onclick="eliminarUsuario();">Si</button>
+              <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
+            </div> 
+          </div>
+        </div>
+      </div>
+
     </div>
     <!-- End: Main -->
 
@@ -384,6 +419,7 @@ else{
     </script>
 
     <script type="text/javascript">
+      idEliminar = 0;
       function mostrarPagos(idUsuario){
         $.ajax({
           type: "POST",
@@ -479,6 +515,30 @@ else{
             }
             else{
               $('#verUsuarioError').modal('show');
+            }
+          }
+        });
+      }
+
+      function eliminar(id){
+        idEliminar = id;
+
+        $('#confirmarEliminar').modal('show');
+      }
+
+      function eliminarUsuario(){
+        $('#confirmarEliminar').modal('hide');
+        $.ajax({
+          async: true,
+          data: {'id': idEliminar},
+          method: 'POST',
+          url: '../../c/eliminarUsuario.php',
+          success: function(resp){
+            if(resp == 1){
+              window.location = 'viewUser.php';
+            }
+            else{
+              $('#errorEliminar').modal('show');
             }
           }
         });

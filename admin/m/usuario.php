@@ -324,4 +324,39 @@
 		}
 	}
 
+	function eliminarUsuario($id){
+		//$conn = new mysqli('localhost', 'preparac_reguIPN', ',+.^ZV[PvE.P]+keKM', 'preparac_regularizacion');
+		$conn = new mysqli("localhost", "root", "root", "preparac_regularizacion");
+
+		$result = $conn->query("DELETE FROM GRUPO_has_USUARIO WHERE USUARIO_idusuario = $id");
+		if(!$result){
+			$conn->rollback();
+			$conn->close();
+			return false;
+		}
+
+		$result = $conn->query("DELETE FROM USUARIO_has_CLASE WHERE USUARIO_idusuario = $id");
+		if(!$result){
+			$conn->rollback();
+			$conn->close();
+			return false;
+		}
+
+		$result = $conn->query("DELETE FROM PAGO WHERE USUARIO_idusuario = $id");
+		if(!$result){
+			$conn->rollback();
+			$conn->close();
+			return false;
+		}
+		
+		$result = $conn->query("DELETE FROM USUARIO WHERE idUsuario = $id");
+		if(!$result){
+			$conn->rollback();
+			$conn->close();
+			return false;
+		}
+
+		$conn->close();
+		return true;
+	}
  ?>
