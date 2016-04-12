@@ -39,9 +39,9 @@ function mostrarTodosUsuarios(){
       </td>
       <td class='tcenter'>
         <div class='btn-group'>
-          <a href='#' class='btn btn-sm btn-system' onclick='editarUsuario(".$row["idUsuario"].")'>
+          <button class='btn btn-sm btn-system' onclick='editarUsuario(".$row["idUsuario"].")'>
             <i class='imoon imoon-pencil text-default'></i>
-          </a>
+          </button>
         </div>
       </td>
       <td class='tcenter'>

@@ -544,6 +544,10 @@ else{
         });
       }
 
+      function editarUsuario(id){
+        window.location = "../../c/editarUsuario.php?id="+id;
+      }
+
     </script>
 
   </body>

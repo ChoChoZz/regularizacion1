@@ -1,3 +1,14 @@
+<?php 
+session_start();
+if(isset($_SESSION['usuario']) && ($_SESSION['tipoUsuario'] == "Administrador" || $_SESSION['tipoUsuario'] == "Super administrador")){
+  $datosUsuario = $_SESSION['datosUsuario'];
+  $idGrupos = $_SESSION['idGrupos'];
+  $grupos = $_SESSION['nombresGrupos'];
+}
+else{
+  header('Location: ../../');
+}
+?>
 <!DOCTYPE html>
 <html lang="es">
 
@@ -85,7 +96,7 @@
                         </a>
                     </li>
                     <li class="crumb-link">
-                        Registrar usuario
+                        Editar usuario
                     </li>
                 </ol>
             </div>
@@ -95,7 +106,7 @@
             <div class="admin-form theme-primary">
               <div class="panel">
                 <div class="panel-heading">
-                  <div class="panel-title">Registrar alumno
+                  <div class="panel-title">Editar alumno
                   </div>
                 </div>
                 <div class="panel-body">
@@ -108,7 +119,7 @@
                       <div class="col-md-4">
                         <div class="section">
                           <label class="field prepend-icon">
-                            <input type="text" name="name" id="name" class="gui-input" placeholder="Nombre(s)">
+                            <input type="text" name="name" id="name" class="gui-input" placeholder="Nombre(s)" value="<?php echo $datosUsuario[0]; ?>">
                             <label for="name" class="field-icon">
                               <i class="fa fa-user"></i>
                             </label>
@@ -119,7 +130,7 @@
                       <div class="col-md-4">
                         <div class="section">
                           <label class="field prepend-icon">
-                            <input type="text" name="firstname" id="firstname" class="gui-input" placeholder="Primer apellido">
+                            <input type="text" name="firstname" id="firstname" class="gui-input" placeholder="Primer apellido" value="<?php echo $datosUsuario[1]; ?>">
                             <label for="firstname" class="field-icon">
                               <i class="fa fa-user"></i>
                             </label>
@@ -129,7 +140,7 @@
                       <div class="col-md-4">
                         <div class="section">
                           <label class="field prepend-icon">
-                            <input type="text" name="secondname" id="secondname" class="gui-input" placeholder="Segundo apellido">
+                            <input type="text" name="secondname" id="secondname" class="gui-input" placeholder="Segundo apellido" value="<?php echo $datosUsuario[2]; ?>">
                             <label for="secondname" class="field-icon">
                               <i class="fa fa-user"></i>
                             </label>
@@ -143,7 +154,11 @@
                           <label class="field select">
                             <div class="option-group field">
                                 <label class="option block">
+                                  <?php if($datosUsuario[3] == "Femenino"){ ?>
                                   <input type="radio" name="sex" value="Femenino" id="sex" checked="true">
+                                  <?php } else{ ?>
+                                  <input type="radio" name="sex" value="Femenino" id="sex">
+                                  <?php } ?>
                                   <span class="radio"></span>Femenino</label>
                                 <br>
                               </div>
@@ -155,7 +170,11 @@
                           <label class="field select">
                             <div class="option-group field">
                                 <label class="option block">
+                                  <?php if($datosUsuario[3] == "Masculino"){ ?>
+                                  <input type="radio" name="sex" value="Masculino" id="sex" checked="true">
+                                  <?php } else{ ?>
                                   <input type="radio" name="sex" value="Masculino" id="sex">
+                                  <?php } ?>
                                   <span class="radio"></span>Masculino</label>
                               </div>
                           </label>
@@ -168,7 +187,7 @@
                       <div class="col-md-4">
                         <div class="section">
                           <label class="field prepend-icon">
-                            <input type="email" name="email" id="email" class="gui-input" placeholder="Correo electrónico">
+                            <input type="email" name="email" id="email" class="gui-input" placeholder="Correo electrónico" value="<?php echo $datosUsuario[4]; ?>">
                             <label for="email" class="field-icon">
                               <i class="fa fa-envelope"></i>
                             </label>
@@ -178,7 +197,7 @@
                       <div class="col-md-4">
                         <div class="section">
                           <label class="field prepend-icon">
-                            <input type="email" name="email1" id="email1" class="gui-input" placeholder="Repite tu correo electrónico">
+                            <input type="email" name="email1" id="email1" class="gui-input" placeholder="Repite tu correo electrónico" value="<?php echo $datosUsuario[4]; ?>">
                             <label for="email1" class="field-icon">
                               <i class="fa fa-envelope"></i>
                             </label>
@@ -188,7 +207,7 @@
                       <div class="col-md-4">
                         <div class="section">
                           <label class="field prepend-icon">
-                            <input type="text" name="phone" id="phone" class="gui-input" placeholder="Teléfono">
+                            <input type="text" name="phone" id="phone" class="gui-input" placeholder="Teléfono" value="<?php echo $datosUsuario[5]; ?>">
                             <label for="phone" class="field-icon">
                               <i class="fa fa-phone"></i>
                             </label>
@@ -198,7 +217,7 @@
                       <div class="col-md-4">
                         <div class="section">
                           <label class="field prepend-icon">
-                            <input type="text" name="cel" id="cel" class="gui-input" placeholder="Teléfono m&oacute;vil">
+                            <input type="text" name="cel" id="cel" class="gui-input" placeholder="Teléfono m&oacute;vil" value="<?php echo $datosUsuario[6]; ?>">
                             <label for="cel" class="field-icon">
                               <i class="fa fa-mobile"></i>
                             </label>
@@ -208,7 +227,7 @@
                         <div class="col-md-4">
                           <div class="section">
                             <label class="field prepend-icon">
-                              <input type="password" name="password" id="password" class="gui-input" placeholder="Contraseña">
+                              <input type="password" name="password" id="password" class="gui-input" placeholder="Contraseña" value="<?php echo $datosUsuario[13]; ?>">
                               <label for="" class="field-icon">
                                 <i class="fa fa-shield"></i>
                               </label>
@@ -218,7 +237,7 @@
                         <div class="col-md-4">
                           <div class="section">
                             <label class="field prepend-icon">
-                              <input type="password" name="password1" id="password1" class="gui-input" placeholder="Repite tu contraseña">
+                              <input type="password" name="password1" id="password1" class="gui-input" placeholder="Repite tu contraseña" value="<?php echo $datosUsuario[13]; ?>">
                               <label for="password1" class="field-icon">
                                 <i class="fa fa-shield"></i>
                               </label>
@@ -232,7 +251,7 @@
                       <div class="col-md-4">
                         <div class="section">
                           <label class="field prepend-icon">
-                            <input type="text" name="street" id="street" class="gui-input" placeholder="Calle y número">
+                            <input type="text" name="street" id="street" class="gui-input" placeholder="Calle y número" value="<?php echo $datosUsuario[11]; ?>">
                             <label for="street" class="field-icon">
                               <i class="fa fa-location-arrow"></i>
                             </label>
@@ -242,7 +261,7 @@
                       <div class="col-md-4">
                         <div class="section">
                           <label class="field prepend-icon">
-                            <input type="text" name="town" id="town" class="gui-input" placeholder="Colonia" >
+                            <input type="text" name="town" id="town" class="gui-input" placeholder="Colonia" value="<?php echo $datosUsuario[10]; ?>">
                             <label for="town" class="field-icon">
                               <i class="fa fa-location-arrow"></i>
                             </label>
@@ -252,7 +271,7 @@
                       <div class="col-md-4">
                         <div class="section">
                           <label class="field prepend-icon">
-                            <input type="text" name="city" id="city" class="gui-input" placeholder="Ciudad/Municipio/Delegación:" >
+                            <input type="text" name="city" id="city" class="gui-input" placeholder="Ciudad/Municipio/Delegación:" value="<?php echo $datosUsuario[9]; ?>">
                             <label for="city" class="field-icon">
                               <i class="fa fa-location-arrow"></i>
                             </label>
@@ -262,7 +281,7 @@
                       <div class="col-md-4">
                         <div class="section">
                           <label class="field prepend-icon">
-                            <input type="text" name="state" id="state" class="gui-input" placeholder="Estado" >
+                            <input type="text" name="state" id="state" class="gui-input" placeholder="Estado" value="<?php echo $datosUsuario[8]; ?>">
                             <label for="state" class="field-icon">
                               <i class="fa fa-crosshairs"></i>
                             </label>
@@ -272,7 +291,7 @@
                       <div class="col-md-4">
                         <div class="section">
                           <label class="field prepend-icon">
-                            <input type="text" name="cp" id="cp" class="gui-input" placeholder="Código Postal">
+                            <input type="text" name="cp" id="cp" class="gui-input" placeholder="Código Postal" value="<?php echo $datosUsuario[7]; ?>">
                             <label for="cp" class="field-icon">
                               <i class="fa fa-crosshairs"></i>
                             </label>
@@ -287,24 +306,14 @@
                     <div class="section row" id="spy5">
                       <div class="col-md-4 pl20 prn">
                         <h6 class="mt40 mb20">Grupos</h6>
+                        <?php for($i=0; $i<count($idGrupos); $i++){ ?>
                           <div class="option-group field">
                             <label class="block mt15 option option-primary">
-                              <input type="checkbox" name="inputname" value="">
-                              <span class="checkbox"></span>C&aacute;lculo A
+                              <input type="checkbox" name="curso" value="<?php echo $idGrupos[$i]; ?>" checked>
+                              <span class="checkbox"></span><?php echo $grupos[$i]; ?>
                             </label>
                           </div>
-                          <div class="option-group field">
-                            <label class="block mt15 option option-primary">
-                              <input type="checkbox" name="inputname" value="" checked>
-                              <span class="checkbox"></span>Ecuaciones diferenciales B
-                            </label>
-                          </div>
-                          <div class="option-group field">
-                            <label class="block mt15 option option-primary">
-                              <input type="checkbox" name="inputname" value="">
-                              <span class="checkbox"></span>F&iacute;sica A
-                            </label>
-                          </div>
+                          <?php } ?>
                       </div>
 
                       <div class="col-md-4 pl20 prn">
@@ -328,7 +337,7 @@
 
                     <div class="mt40 panel-footer text-center">
                         <button type="submit" class="btn btn-bordered btn-primary mb5"> Aceptar</button>
-                        <button type="reset" class="btn btn-bordered mb5"> Cancelar</button>
+                        <button type="reset" class="btn btn-bordered mb5" onclick="javascript: window.location = 'viewUser.php';"> Cancelar</button>
                     </div>
 
                   </form>
@@ -341,7 +350,19 @@
 
     </section>
     <!-- End: Content-Wrapper -->
-
+<div id="errorEditar"  class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="exampleModalLabel">Error</h4>
+          </div>
+          <div class="modal-body">
+            <label class="control-label">No se editó el registro correctamente.</label>
+          </div>
+        </div>
+      </div>
+    </div>
 
 </div>
 <!-- End: Main -->
@@ -401,14 +422,13 @@
                   email1: { required:true, email: true, equalTo: '#email' },
                   phone: { required:true, maxlength: 20},
                   cel: { maxlength: 25},
-                  phone: {maxlength: 20, required: true},
                   street: { required: true},
                   town: { required: true},
                   city: { required:true},
                   state: { required: true},
                   sex: {required: true},
-                  cp: { required: true, minlength: 5, number:true},
-                  grupoSeleccionado: {minlength: 1}
+                  cp: { required: true, minlength: 5, number:true}/*,
+                  grupoSeleccionado: {minlength: 1}*/
               },
               messages: {
                   name: "Campo requerido",
@@ -441,27 +461,72 @@
                       required: "Campo requerido",
                       minlength: "M&iacute;nimo 5 caracteres",
                       number: "Introduce solo numeros"
-                  },
+                  }/*,
                   grupoSeleccionado: {
                       minlength: "Selecciona por lo menos un grupo"
-                  }
+                  }*/
               },
               // name, firstname, secondname, password, paswoord1, sex, email, email1, phone, cel, street, town, city, state, cp
               submitHandler: function(form){
-              var dataString = 'name='+$('#name').val()+'&firstname='+$('#firstname').val()+'&secondname='+$('#secondname').val()+'&secondname='+$('#secondname').val()+'&password='+$('#password').val()+'&sex='+$('#sex').val()+'&email='+$('#email').val()+'&phone='+$('#phone').val()+'&cel='+$('#cel').val()+'&street='+$('#street').val()+'&town='+$('#town').val()+'&city='+$('#city').val()+'&state='+$('#state').val()+'&grupoSeleccionado='+$('#grupoSeleccionado').val();
-                  $.ajax({
-                      type: "POST",
-                      url:"./c/registrarUsuario.php",
-                      data: dataString,
-                      success:function(response){ 
-                          console.log(response);
-                          if(response == 1){
-                              window.location='./instructions.php'    
-                          }else{
-                              alert("No se pudo realizar el registro");
-                          }
-                      }
-                  });
+                var name = document.getElementById('name').value;
+                var firstname = document.getElementById('firstname').value;
+                var secondname = document.getElementById('secondname').value;
+                var email = document.getElementById('email').value;
+                var phone = document.getElementById('phone').value;
+                var cel = document.getElementById('cel').value;
+                var password = document.getElementById('password').value;
+                var street = document.getElementById('street').value;
+                var town = document.getElementById('town').value;
+                var city = document.getElementById('city').value;
+                var state = document.getElementById('state').value;
+                var cp = document.getElementById('cp').value;
+
+                var aux = document.getElementsByName('sex');
+                var sex;
+                for(i=0; i<aux.length; i++){
+                  if(aux[i].checked){
+                    sex = aux[i].value;
+                  }
+                }
+                
+                var aux = document.getElementsByName('curso');
+                var cursos = new Array();
+                for(i=0; i<aux.length; i++){
+                  if(aux[i].checked){
+                    cursos[i] = aux[i].value;
+                  }
+                }
+                var datos = {
+                  'name': name,
+                  'firstname': firstname,
+                  'secondname':  secondname,
+                  'sex': sex,
+                  'email': email,
+                  'phone': phone,
+                  'cel': cel,
+                  'password': password,
+                  'street': street,
+                  'town': town,
+                  'city': city,
+                  'state': state,
+                  'cp': cp,
+                  'cursos': cursos
+                }
+                $.ajax({
+                  async: true,
+                  method: 'post',
+                  data: datos,
+                  url: "../../c/actualizarUsuario.php",
+                  success: function(resp){
+                    console.log(resp);
+                    if(resp == 1){
+                      window.location="viewUser.php";
+                    }
+                    else{
+                      $("#errorEditar").modal("show");
+                    }
+                  }
+                });
               }
 
           });
@@ -469,5 +534,4 @@
     </script>
 
 </body>
-
 </html>

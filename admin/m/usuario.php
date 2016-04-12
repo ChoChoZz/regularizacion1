@@ -317,7 +317,8 @@
 			$colonia = $row['colonia'];
 			$calle = $row['calle'];
 			$status = $row['status'];
-			return array($nombre, $primerApellido, $segundoApellido, $sexo, $correo, $telefono, $celular, $cp, $estado, $municipio, $colonia, $calle, $status);
+			$contrasena = $row['contrasena'];
+			return array($nombre, $primerApellido, $segundoApellido, $sexo, $correo, $telefono, $celular, $cp, $estado, $municipio, $colonia, $calle, $status, $contrasena);
 		}
 		else{
 			return false;
@@ -358,5 +359,26 @@
 
 		$conn->close();
 		return true;
+	}
+
+	function editarUsuario($idUsuario, $nombre, $primerApellido, $segundoApellido, $sexo, $contrasena, $correo, $telefono, $celular, $cp, $estado, $municipio, $colonia, $calle, $cursos){
+		//$conn = new mysqli('localhost', 'preparac_reguIPN', ',+.^ZV[PvE.P]+keKM', 'preparac_regularizacion');
+		$conn = new mysqli("localhost", "root", "root", "preparac_regularizacion");
+		$result = $conn->query("UPDATE USUARIO SET nombre = '$nombre', primerApellido = '$primerApellido', segundoApellido = '$segundoApellido', sexo = '$sexo', contrasena = '$contrasena', correo = '$correo', telefono = '$telefono', celular = '$celular', cp = '$cp', estado = '$estado', municipio = '$municipio', colonia = '$colonia', calle = '$calle' WHERE idUsuario = 7");
+		
+		if(!$result){
+			$conn->close();
+			return false;
+		}
+		else{
+			$result = $conn->query("DELETE FROM GRUPO_has_USUARIO WHERE USUARIO_idusuario = $idUsuario;");
+			for($i=0; $i<count($cursos); $i++){
+				$result = $conn->query("INSERT INTO GRUPO_has_USUARIO (GRUPO_idgrupo, USUARIO_idusuario) VALUES (".$cursos[$i].", $idUsuario);");
+			}
+			$conn->close();
+			return $result;
+		}
+
+
 	}
  ?>
