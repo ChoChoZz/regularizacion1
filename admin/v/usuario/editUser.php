@@ -518,13 +518,7 @@ else{
                   data: datos,
                   url: "../../c/actualizarUsuario.php",
                   success: function(resp){
-                    console.log(resp);
-                    if(resp == 1){
                       window.location="viewUser.php";
-                    }
-                    else{
-                      $("#errorEditar").modal("show");
-                    }
                   }
                 });
               }

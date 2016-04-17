@@ -19,11 +19,6 @@ $state = $_POST['state'];
 $cp = $_POST['cp'];
 $cursos = $_POST['cursos'];
 
-if(!editarUsuario($idUsuario, $name, $firstname, $secondname, $sex, $password, $mail, $phone, $cel, $cp, $state, $city, $town, $street, $cursos)){
-	echo false;
-	exit();
-}
-else{
-	echo true;
-}
+editarUsuario($idUsuario, $name, $firstname, $secondname, $sex, $password, $mail, $phone, $cel, $cp, $state, $city, $town, $street, $cursos);
+echo true;
 ?>

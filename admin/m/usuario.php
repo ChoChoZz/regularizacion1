@@ -364,7 +364,7 @@
 	function editarUsuario($idUsuario, $nombre, $primerApellido, $segundoApellido, $sexo, $contrasena, $correo, $telefono, $celular, $cp, $estado, $municipio, $colonia, $calle, $cursos){
 		//$conn = new mysqli('localhost', 'preparac_reguIPN', ',+.^ZV[PvE.P]+keKM', 'preparac_regularizacion');
 		$conn = new mysqli("localhost", "root", "root", "preparac_regularizacion");
-		$result = $conn->query("UPDATE USUARIO SET nombre = '$nombre', primerApellido = '$primerApellido', segundoApellido = '$segundoApellido', sexo = '$sexo', contrasena = '$contrasena', correo = '$correo', telefono = '$telefono', celular = '$celular', cp = '$cp', estado = '$estado', municipio = '$municipio', colonia = '$colonia', calle = '$calle' WHERE idUsuario = 7");
+		$result = $conn->query("UPDATE USUARIO SET nombre = '$nombre', primerApellido = '$primerApellido', segundoApellido = '$segundoApellido', sexo = '$sexo', contrasena = '$contrasena', correo = '$correo', telefono = '$telefono', celular = '$celular', cp = '$cp', estado = '$estado', municipio = '$municipio', colonia = '$colonia', calle = '$calle' WHERE idUsuario = $idUsuario");
 		
 		if(!$result){
 			$conn->close();
@@ -375,10 +375,29 @@
 			for($i=0; $i<count($cursos); $i++){
 				$result = $conn->query("INSERT INTO GRUPO_has_USUARIO (GRUPO_idgrupo, USUARIO_idusuario) VALUES (".$cursos[$i].", $idUsuario);");
 			}
-			$conn->close();
-			return $result;
 		}
 
+		if(!$result){
+			$conn->close();
+			return false;
+		}
+		else{
+			$idClases = array();
+			$j=0;
+			$result = $conn->query("DELETE FROM USUARIO_has_CLASE WHERE USUARIO_idusuario = $idUsuario;");
+			for($i=0; $i<count($cursos); $i++){
+				$result = $conn->query("SELECT idClase FROM CLASE WHERE GRUPO_idgrupo = ".$cursos[$i].";");
+				while($row = $result->fetch_array()){
+					$idClases[$j] = $row['idClase'];
+					$j++;
+				}
+			}
 
+			for($i=0; $i<count($idClases); $i++){
+				$result = $conn->query("INSERT USUARIO_has_CLASE (USUARIO_idusuario, CLASE_idClase) VALUES (".$idClases[$i].", $idUsuario);");
+			}
+		}
+		$conn->close();
+		return true;
 	}
  ?>

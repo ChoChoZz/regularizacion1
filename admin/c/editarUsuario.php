@@ -7,8 +7,9 @@ require '../m/grupo.php';
 $id = $_GET['id'];
 
 $datosUsuario = verUsuario($id);
-$nombresGrupos = array_values(gruposDeUsuario($id));
-$idGrupos = array_values(mostrarGruposAlumno($id));
+$datosGrupos = gruposDeUsuario($id);
+$nombresGrupos = $datosGrupos[1];
+$idGrupos = $datosGrupos[0];
 
 if(!$datosUsuario || !$idGrupos || !$nombresGrupos){
 	echo false;
