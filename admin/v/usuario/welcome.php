@@ -117,7 +117,7 @@ else{
                                   </div>
                               </div>
                               <div class="panel-body">
-                                <a href="./createUser.php" class="btn btn-xs btn-info btn-block">Registrar usuario</a>
+                                <a href="../../../registro" class="btn btn-xs btn-info btn-block">Registrar usuario</a>
                                 <a href="./viewUser.php" class="btn btn-xs btn-system btn-block">Consultar usuario</a>
                               </div>
                           </div>
