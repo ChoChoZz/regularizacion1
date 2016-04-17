@@ -296,17 +296,26 @@ function editarGrupo($idGrupo, $grupo, $capacidad, $costo, $periodoInscripcion, 
 function gruposDeUsuario($id){
 	//$mysqli = new mysqli('localhost', 'preparac_reguIPN', ',+.^ZV[PvE.P]+keKM', 'preparac_regularizacion');
 	$mysqli = new mysqli('localhost', 'root', 'root', 'preparac_regularizacion');
-	$result = $mysqli->query("SELECT GRUPO.nombre from GRUPO join GRUPO_has_USUARIO on GRUPO_has_USUARIO.USUARIO_idusuario = $id");
-	$mysqli->close();
+	$result = $mysqli->query("SELECT GRUPO_idgrupo from GRUPO_has_USUARIO WHERE USUARIO_idusuario = $id;");
+	
+	$idGrupos = array();
 	$grupos = array();
 	$i=0;
 
 	while($row = $result->fetch_array()){
-		$grupos[$i] = $row[0];
+		$idGrupos[$i] = $row[0];
 		$i++;
 	}
-	$grupos = array_unique($grupos);
-	return $grupos;
+
+	for($i=0; $i<count($idGrupos); $i++){
+		$result = $mysqli->query("SELECT nombre FROM GRUPO WHERE idGrupo = ".$idGrupos[$i].";");
+		if($row = $result->fetch_array()){
+			$grupos[$i] = $row['nombre'];
+		}
+	}
+	$mysqli->close();
+	return array($idGrupos, $grupos);
+
 }
 
 function mostrarGruposClase($idCurso){

@@ -13,7 +13,7 @@ if(!$datos){
 }
 
 $gruposUsuario = gruposDeUsuario($id);
-if(!$gruposUsuario[0]){
+if(!$gruposUsuario[0][0]){
 	echo false;
 	exit();
 }
@@ -31,6 +31,6 @@ $municipio = $datos[9];
 $colonia = $datos[10];
 $calle = $datos[11];
 $status = $datos[12];
-$gruposUsuario = implode("#", $gruposUsuario);
+$gruposUsuario = implode("#", $gruposUsuario[1]);
 echo "$nombre $primerApellido $segundoApellido|$sexo|$correo|$telefono|$celular|$calle $colonia $municipio $estado $cp|$status|$gruposUsuario";
 ?>
