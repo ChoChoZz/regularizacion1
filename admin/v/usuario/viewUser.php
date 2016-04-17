@@ -487,6 +487,13 @@ else{
           data: {'id': idUsuario},
           url: '../../c/verUsuario.php',
           success: function(resp){
+              document.getElementById('nombreCompleto').innerHTML = '';
+              document.getElementById('sexo').innerHTML = '';
+              document.getElementById('correo').innerHTML = '';
+              document.getElementById('telefono').innerHTML = '';
+              document.getElementById('celular').innerHTML = '';
+              document.getElementById('direccion').innerHTML = '';
+              document.getElementById('gruposUsuario').innerHTML = '';
             if(resp){
               console.log(resp);
               var datos = resp.split('|');
