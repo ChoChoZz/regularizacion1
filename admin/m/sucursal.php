@@ -2,8 +2,8 @@
 header('Content-Type: text/html; charset=UTF-8');
 
 function agregarSucursal($nombre, $descripcion, $tel, $telResp, $direccion, $capacidad, $croquis){
-	//$mysqli = new mysqli('localhost', 'preparac_reguIPN', ',+.^ZV[PvE.P]+keKM', 'preparac_regularizacion');
-	$mysqli = new mysqli('localhost', 'root', 'root', 'preparac_regularizacion');
+	$mysqli = new mysqli('localhost', 'preparac_reguIPN', ',+.^ZV[PvE.P]+keKM', 'preparac_regularizacion');
+	//$mysqli = new mysqli('localhost', 'root', 'root', 'preparac_regularizacion');
 	$mysqli->autocommit(false);
 	$result = $mysqli->query("INSERT INTO `preparac_regularizacion`.`SUCURSAL` (`nombre`, `descripcion`, `telefono`, `telefonoRespaldo`, `direccion`, `capacidad`, `croquis`)
 		VALUES ('$nombre', '$descripcion', '$tel', '$telResp', '$direccion', $capacidad, '$croquis');");
@@ -22,8 +22,8 @@ function agregarSucursal($nombre, $descripcion, $tel, $telResp, $direccion, $cap
 }
 
 function getProxIdSucursal(){
-	//$mysqli = new mysqli('localhost', 'preparac_reguIPN', ',+.^ZV[PvE.P]+keKM', 'preparac_regularizacion');
-	$mysqli = new mysqli('localhost', 'root', 'root', 'preparac_regularizacion');
+	$mysqli = new mysqli('localhost', 'preparac_reguIPN', ',+.^ZV[PvE.P]+keKM', 'preparac_regularizacion');
+	//$mysqli = new mysqli('localhost', 'root', 'root', 'preparac_regularizacion');
 	$result = $mysqli->query("select AUTO_INCREMENT from information_schema.TABLES where TABLE_SCHEMA='preparac_regularizacion' and TABLE_NAME='SUCURSAL';");
 	$mysqli->close();
 	if($row = $result->fetch_array()){
@@ -33,8 +33,8 @@ function getProxIdSucursal(){
 }
 
 function getSucursales(){
-	//$mysqli = new mysqli('localhost', 'preparac_reguIPN', ',+.^ZV[PvE.P]+keKM', 'preparac_regularizacion');
-	$mysqli = new mysqli('localhost', 'root', 'root', 'preparac_regularizacion');
+	$mysqli = new mysqli('localhost', 'preparac_reguIPN', ',+.^ZV[PvE.P]+keKM', 'preparac_regularizacion');
+	//$mysqli = new mysqli('localhost', 'root', 'root', 'preparac_regularizacion');
 	$result = $mysqli->query("Select idSucursal, nombre, direccion, telefono from SUCURSAL order by nombre;");
 	$i=0;
 	$idSucursal = array();
@@ -56,16 +56,16 @@ function getSucursales(){
 }
 
 function eliminarSucursal($id){
-	//$mysqli = new mysqli('localhost', 'preparac_reguIPN', ',+.^ZV[PvE.P]+keKM', 'preparac_regularizacion');
-	$mysqli = new mysqli('localhost', 'root', 'root', 'preparac_regularizacion');
+	$mysqli = new mysqli('localhost', 'preparac_reguIPN', ',+.^ZV[PvE.P]+keKM', 'preparac_regularizacion');
+	//$mysqli = new mysqli('localhost', 'root', 'root', 'preparac_regularizacion');
 	$result = $mysqli->query("DELETE FROM `preparac_regularizacion`.`SUCURSAL` WHERE `idSucursal`='$id';");
 	$mysqli->close();
 	return $result;
 }
 
 function verSucursal($id){
-	//$mysqli = new mysqli('localhost', 'preparac_reguIPN', ',+.^ZV[PvE.P]+keKM', 'preparac_regularizacion');
-	$mysqli = new mysqli('localhost', 'root', 'root', 'preparac_regularizacion');
+	$mysqli = new mysqli('localhost', 'preparac_reguIPN', ',+.^ZV[PvE.P]+keKM', 'preparac_regularizacion');
+	//$mysqli = new mysqli('localhost', 'root', 'root', 'preparac_regularizacion');
 	$result = $mysqli->query("Select * from SUCURSAL where idSucursal = $id;");
 
 	$idSucursal = null;
@@ -93,8 +93,8 @@ function verSucursal($id){
 }
 
 function editarSucursal($id, $nombre, $descripcion, $tel, $telResp, $direccion, $capacidad, $croquis){
-	//$mysqli = new mysqli('localhost', 'preparac_reguIPN', ',+.^ZV[PvE.P]+keKM', 'preparac_regularizacion');
-	$mysqli = new mysqli('localhost', 'root', 'root', 'preparac_regularizacion');
+	$mysqli = new mysqli('localhost', 'preparac_reguIPN', ',+.^ZV[PvE.P]+keKM', 'preparac_regularizacion');
+	//$mysqli = new mysqli('localhost', 'root', 'root', 'preparac_regularizacion');
 	$mysqli->autocommit(false);
 	if(!isset($croquis)){
 		$croquis = getCroquis($id);
@@ -112,8 +112,8 @@ function editarSucursal($id, $nombre, $descripcion, $tel, $telResp, $direccion, 
 }
 
 function getCroquis($id){
-	//$mysqli = new mysqli('localhost', 'preparac_reguIPN', ',+.^ZV[PvE.P]+keKM', 'preparac_regularizacion');
-	$mysqli = new mysqli('localhost', 'root', 'root', 'preparac_regularizacion');
+	$mysqli = new mysqli('localhost', 'preparac_reguIPN', ',+.^ZV[PvE.P]+keKM', 'preparac_regularizacion');
+	//$mysqli = new mysqli('localhost', 'root', 'root', 'preparac_regularizacion');
 	$result = $mysqli->query("Select croquis from SUCURSAL where idSucursal = '$id';");
 	$croquis=false;
 	$mysqli->close();

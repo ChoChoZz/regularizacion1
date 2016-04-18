@@ -3,8 +3,8 @@
 header('Content-Type: text/html; charset=UTF-8'); 
 
 function obtenerPagosUsuario($idUsuario){
-	$conn = new mysqli("localhost", "root", "root", "preparac_regularizacion");
-	//$conn = new mysqli('localhost', 'preparac_reguIPN', ',+.^ZV[PvE.P]+keKM', 'preparac_regularizacion');
+	//$conn = new mysqli("localhost", "root", "root", "preparac_regularizacion");
+	$conn = new mysqli('localhost', 'preparac_reguIPN', ',+.^ZV[PvE.P]+keKM', 'preparac_regularizacion');
 
 	if (mysqli_connect_errno()) {
 		printf("Conexion fallida: %s\n", mysqli_connect_error());
@@ -24,8 +24,8 @@ function obtenerPagosUsuario($idUsuario){
 }
 
 function liquidarPago($idPago, $monto){
-	$conn = new mysqli("localhost", "root", "root", "preparac_regularizacion");
-	//$conn = new mysqli('localhost', 'preparac_reguIPN', ',+.^ZV[PvE.P]+keKM', 'preparac_regularizacion');
+	//$conn = new mysqli("localhost", "root", "root", "preparac_regularizacion");
+	$conn = new mysqli('localhost', 'preparac_reguIPN', ',+.^ZV[PvE.P]+keKM', 'preparac_regularizacion');
 
 	if (mysqli_connect_errno()) {
 		printf("Conexion fallida: %s\n", mysqli_connect_error());
@@ -75,8 +75,8 @@ function liquidarPago($idPago, $monto){
 }
 
 function registrarPago($idPago, $cantidad){
-	$conn = new mysqli("localhost", "root", "root", "preparac_regularizacion");
-	//$conn = new mysqli('localhost', 'preparac_reguIPN', ',+.^ZV[PvE.P]+keKM', 'preparac_regularizacion');
+	//$conn = new mysqli("localhost", "root", "root", "preparac_regularizacion");
+	$conn = new mysqli('localhost', 'preparac_reguIPN', ',+.^ZV[PvE.P]+keKM', 'preparac_regularizacion');
 
 	if (mysqli_connect_errno()) {
 		printf("Conexion fallida: %s\n", mysqli_connect_error());
@@ -129,8 +129,8 @@ function registrarPago($idPago, $cantidad){
 }
 
 function pagosComprobante($idUsuario, $idGrupo){
-	$conn = new mysqli("localhost", "root", "root", "preparac_regularizacion");
-	//$conn = new mysqli('localhost', 'preparac_reguIPN', ',+.^ZV[PvE.P]+keKM', 'preparac_regularizacion');
+	//$conn = new mysqli("localhost", "root", "root", "preparac_regularizacion");
+	$conn = new mysqli('localhost', 'preparac_reguIPN', ',+.^ZV[PvE.P]+keKM', 'preparac_regularizacion');
 
 	$result = $conn->query("SELECT monto FROM PAGO WHERE USUARIO_idusuario = $idUsuario AND GRUPO_idgrupo = $idGrupo;");
 	$conn->close();

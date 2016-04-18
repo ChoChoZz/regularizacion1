@@ -7,8 +7,8 @@
 	function crearUsuario($nombre, $primerApellido, $segundoApellido, $contrasena, $sexo, $correo, $telefono, $celular, $calle, $colonia, $municipio, $estado, $cp, $tipoUsuario, $status, $grupos){
 
 		/*conexion*/
-		$conn = new mysqli("localhost", "root", "root", "preparac_regularizacion");
-		//$conn = new mysqli('localhost', 'preparac_reguIPN', ',+.^ZV[PvE.P]+keKM', 'preparac_regularizacion');
+		//$conn = new mysqli("localhost", "root", "root", "preparac_regularizacion");
+		$conn = new mysqli('localhost', 'preparac_reguIPN', ',+.^ZV[PvE.P]+keKM', 'preparac_regularizacion');
 
 		/* comprueba la conexión */
 		if (mysqli_connect_errno()) {
@@ -137,8 +137,8 @@
 	}
 
 	function ultimoUsuario(){
-		$conn = new mysqli("localhost", "root", "root", "preparac_regularizacion");
-		//$conn = new mysqli('localhost', 'preparac_reguIPN', ',+.^ZV[PvE.P]+keKM', 'preparac_regularizacion');
+		//$conn = new mysqli("localhost", "root", "root", "preparac_regularizacion");
+		$conn = new mysqli('localhost', 'preparac_reguIPN', ',+.^ZV[PvE.P]+keKM', 'preparac_regularizacion');
 		/* comprueba la conexión */
 		if (mysqli_connect_errno()) {
 		    printf("Conexion fallida: %s\n", mysqli_connect_error());
@@ -154,8 +154,8 @@
 	}
 
 	function mostrarGrupo(){
-		//$conn = new mysqli('localhost', 'preparac_reguIPN', ',+.^ZV[PvE.P]+keKM', 'preparac_regularizacion');
-		$conn = new mysqli("localhost", "root", "root", "preparac_regularizacion");
+		$conn = new mysqli('localhost', 'preparac_reguIPN', ',+.^ZV[PvE.P]+keKM', 'preparac_regularizacion');
+		//$conn = new mysqli("localhost", "root", "root", "preparac_regularizacion");
 
 		//linea para escapar acentos
 		mysqli_query($conn, "SET NAMES 'utf8'");
@@ -176,8 +176,8 @@
 	}
 
 	function buscarCorreo($correo){
-		//$conn = new mysqli('localhost', 'preparac_reguIPN', ',+.^ZV[PvE.P]+keKM', 'preparac_regularizacion');
-		$conn = new mysqli("localhost", "root", "root", "preparac_regularizacion");
+		$conn = new mysqli('localhost', 'preparac_reguIPN', ',+.^ZV[PvE.P]+keKM', 'preparac_regularizacion');
+		//$conn = new mysqli("localhost", "root", "root", "preparac_regularizacion");
 
 		//linea para escapar acentos
 		mysqli_query($conn, "SET NAMES 'utf8'");
@@ -199,8 +199,8 @@
 	}
 
 	function verificarCupo($idGrupo){
-		//$conn = new mysqli('localhost', 'preparac_reguIPN', ',+.^ZV[PvE.P]+keKM', 'preparac_regularizacion');
-		$conn = new mysqli("localhost", "root", "root", "preparac_regularizacion");
+		$conn = new mysqli('localhost', 'preparac_reguIPN', ',+.^ZV[PvE.P]+keKM', 'preparac_regularizacion');
+		//$conn = new mysqli("localhost", "root", "root", "preparac_regularizacion");
 		//linea para escapar acentos
 		mysqli_query($conn, "SET NAMES 'utf8'");
 		
@@ -226,8 +226,8 @@
 	}
 
 	function mostrarGruposAlumno($idUsuario){
-		//$conn = new mysqli('localhost', 'preparac_reguIPN', ',+.^ZV[PvE.P]+keKM', 'preparac_regularizacion');
-		$conn = new mysqli("localhost", "root", "root", "preparac_regularizacion");
+		$conn = new mysqli('localhost', 'preparac_reguIPN', ',+.^ZV[PvE.P]+keKM', 'preparac_regularizacion');
+		//$conn = new mysqli("localhost", "root", "root", "preparac_regularizacion");
 		//linea para escapar acentos
 		mysqli_query($conn, "SET NAMES 'utf8'");
 
@@ -252,8 +252,8 @@
 	}
 
 	function obtenerCorreo($idUsuario){
-		//$conn = new mysqli('localhost', 'preparac_reguIPN', ',+.^ZV[PvE.P]+keKM', 'preparac_regularizacion');
-		$conn = new mysqli("localhost", "root", "root", "preparac_regularizacion");
+		$conn = new mysqli('localhost', 'preparac_reguIPN', ',+.^ZV[PvE.P]+keKM', 'preparac_regularizacion');
+		//$conn = new mysqli("localhost", "root", "root", "preparac_regularizacion");
 		//linea para escapar acentos
 		mysqli_query($conn, "SET NAMES 'utf8'");
 		
@@ -275,8 +275,8 @@
 	}
 
         function mostrarTodosUsua(){
-		//$conn = new mysqli('localhost', 'preparac_reguIPN', ',+.^ZV[PvE.P]+keKM', 'preparac_regularizacion');
-		$conn = new mysqli("localhost", "root", "root", "preparac_regularizacion");
+		$conn = new mysqli('localhost', 'preparac_reguIPN', ',+.^ZV[PvE.P]+keKM', 'preparac_regularizacion');
+		//$conn = new mysqli("localhost", "root", "root", "preparac_regularizacion");
 		
 		if (mysqli_connect_errno()) {
 		    printf("Conexion fallida: %s\n", mysqli_connect_error());
@@ -298,8 +298,8 @@
 	}
 
 	function verUsuario($id){
-		//$conn = new mysqli('localhost', 'preparac_reguIPN', ',+.^ZV[PvE.P]+keKM', 'preparac_regularizacion');
-		$conn = new mysqli("localhost", "root", "root", "preparac_regularizacion");
+		$conn = new mysqli('localhost', 'preparac_reguIPN', ',+.^ZV[PvE.P]+keKM', 'preparac_regularizacion');
+		//$conn = new mysqli("localhost", "root", "root", "preparac_regularizacion");
 
 		$result = $conn->query("SELECT * FROM USUARIO WHERE idUsuario=$id;");
 		$conn->close();
@@ -326,8 +326,8 @@
 	}
 
 	function eliminarUsuario($id){
-		//$conn = new mysqli('localhost', 'preparac_reguIPN', ',+.^ZV[PvE.P]+keKM', 'preparac_regularizacion');
-		$conn = new mysqli("localhost", "root", "root", "preparac_regularizacion");
+		$conn = new mysqli('localhost', 'preparac_reguIPN', ',+.^ZV[PvE.P]+keKM', 'preparac_regularizacion');
+		//$conn = new mysqli("localhost", "root", "root", "preparac_regularizacion");
 
 		$result = $conn->query("DELETE FROM GRUPO_has_USUARIO WHERE USUARIO_idusuario = $id");
 		if(!$result){
@@ -362,8 +362,8 @@
 	}
 
 	function editarUsuario($idUsuario, $nombre, $primerApellido, $segundoApellido, $sexo, $contrasena, $correo, $telefono, $celular, $cp, $estado, $municipio, $colonia, $calle, $cursos){
-		//$conn = new mysqli('localhost', 'preparac_reguIPN', ',+.^ZV[PvE.P]+keKM', 'preparac_regularizacion');
-		$conn = new mysqli("localhost", "root", "root", "preparac_regularizacion");
+		$conn = new mysqli('localhost', 'preparac_reguIPN', ',+.^ZV[PvE.P]+keKM', 'preparac_regularizacion');
+		//$conn = new mysqli("localhost", "root", "root", "preparac_regularizacion");
 		$result = $conn->query("UPDATE USUARIO SET nombre = '$nombre', primerApellido = '$primerApellido', segundoApellido = '$segundoApellido', sexo = '$sexo', contrasena = '$contrasena', correo = '$correo', telefono = '$telefono', celular = '$celular', cp = '$cp', estado = '$estado', municipio = '$municipio', colonia = '$colonia', calle = '$calle' WHERE idUsuario = $idUsuario");
 		
 		if(!$result){

@@ -2,8 +2,8 @@
 header('Content-Type: text/html; charset=UTF-8');
 
 function catalogosCrearGrupo(){
-	//$mysqli = new mysqli('localhost', 'preparac_reguIPN', ',+.^ZV[PvE.P]+keKM', 'preparac_regularizacion');
-	$mysqli = new mysqli('localhost', 'root', 'root', 'preparac_regularizacion');
+	$mysqli = new mysqli('localhost', 'preparac_reguIPN', ',+.^ZV[PvE.P]+keKM', 'preparac_regularizacion');
+	//$mysqli = new mysqli('localhost', 'root', 'root', 'preparac_regularizacion');
 
 	$result = $mysqli->query("Select idSucursal, nombre from SUCURSAL order by nombre;");
 	$idSucursal = array();
@@ -32,8 +32,8 @@ function catalogosCrearGrupo(){
 }
 
 function agregarGrupo($idGrupo, $nombreGrupo, $capacidad, $costo, $periodoInscripcion, $fechaPago, $sucursal, $curso){
-	//$mysqli = new mysqli('localhost', 'preparac_reguIPN', ',+.^ZV[PvE.P]+keKM', 'preparac_regularizacion');
-	$mysqli = new mysqli('localhost', 'root', 'root', 'preparac_regularizacion');
+	$mysqli = new mysqli('localhost', 'preparac_reguIPN', ',+.^ZV[PvE.P]+keKM', 'preparac_regularizacion');
+	//$mysqli = new mysqli('localhost', 'root', 'root', 'preparac_regularizacion');
 
 	$result = $mysqli->query("INSERT INTO `GRUPO` (`idGrupo`, `nombre`, `capacidad`, `costo`, `periodoInscripcion`, `fechaPago`, `SUCURSAL_idsucursal`, `CURSO_idcurso`, `estatus`) VALUES ('$idGrupo', '$nombreGrupo', '$capacidad', '$costo', '$periodoInscripcion', '$fechaPago', '$sucursal', '$curso', 'Activo');");
 	$mysqli->close();
@@ -41,8 +41,8 @@ function agregarGrupo($idGrupo, $nombreGrupo, $capacidad, $costo, $periodoInscri
 }
 
 function getProxIdGrupo(){
-	//$mysqli = new mysqli('localhost', 'preparac_reguIPN', ',+.^ZV[PvE.P]+keKM', 'preparac_regularizacion');
-	$mysqli = new mysqli('localhost', 'root', 'root', 'preparac_regularizacion');
+	$mysqli = new mysqli('localhost', 'preparac_reguIPN', ',+.^ZV[PvE.P]+keKM', 'preparac_regularizacion');
+	//$mysqli = new mysqli('localhost', 'root', 'root', 'preparac_regularizacion');
 	$result = $mysqli->query("select AUTO_INCREMENT from information_schema.TABLES where TABLE_SCHEMA='preparac_regularizacion' and TABLE_NAME='GRUPO';");
 	$mysqli->close();
 	if($row = $result->fetch_array()){
@@ -52,16 +52,16 @@ function getProxIdGrupo(){
 }
 
 function borrarGrupo($id){
-	//$mysqli = new mysqli('localhost', 'preparac_reguIPN', ',+.^ZV[PvE.P]+keKM', 'preparac_regularizacion');
-	$mysqli = new mysqli('localhost', 'root', 'root', 'preparac_regularizacion');
+	$mysqli = new mysqli('localhost', 'preparac_reguIPN', ',+.^ZV[PvE.P]+keKM', 'preparac_regularizacion');
+	//$mysqli = new mysqli('localhost', 'root', 'root', 'preparac_regularizacion');
 	$result = $mysqli->query("DELETE FROM GRUPO WHERE idGrupo = $id;");
 	$mysqli->close();
 	return $result;
 }
 
 function getGrupos(){
-	//$mysqli = new mysqli('localhost', 'preparac_reguIPN', ',+.^ZV[PvE.P]+keKM', 'preparac_regularizacion');
-	$mysqli = new mysqli('localhost', 'root', 'root', 'preparac_regularizacion');
+	$mysqli = new mysqli('localhost', 'preparac_reguIPN', ',+.^ZV[PvE.P]+keKM', 'preparac_regularizacion');
+	//$mysqli = new mysqli('localhost', 'root', 'root', 'preparac_regularizacion');
 	$idGrupo = array();
 	$nombre = array();
 	$capacidad = array();
@@ -102,8 +102,8 @@ function getGrupos(){
 }
 
 function getEstatus($id){
-	//$mysqli = new mysqli('localhost', 'preparac_reguIPN', ',+.^ZV[PvE.P]+keKM', 'preparac_regularizacion');
-	$mysqli = new mysqli('localhost', 'root', 'root', 'preparac_regularizacion');
+	$mysqli = new mysqli('localhost', 'preparac_reguIPN', ',+.^ZV[PvE.P]+keKM', 'preparac_regularizacion');
+	//$mysqli = new mysqli('localhost', 'root', 'root', 'preparac_regularizacion');
 	
 	$result = $mysqli->query("SELECT estatus FROM GRUPO where idGrupo = $id;");
 	$mysqli->close();
@@ -117,8 +117,8 @@ function getEstatus($id){
 }
 
 function cambiarEstatus($id, $estatus){
-	//$mysqli = new mysqli('localhost', 'preparac_reguIPN', ',+.^ZV[PvE.P]+keKM', 'preparac_regularizacion');
-	$mysqli = new mysqli('localhost', 'root', 'root', 'preparac_regularizacion');
+	$mysqli = new mysqli('localhost', 'preparac_reguIPN', ',+.^ZV[PvE.P]+keKM', 'preparac_regularizacion');
+	//$mysqli = new mysqli('localhost', 'root', 'root', 'preparac_regularizacion');
 
 	if($estatus == "Activo"){
 		$result = $mysqli->query("UPDATE  GRUPO SET estatus = 'Inactivo' WHERE idGrupo = $id;");
@@ -132,8 +132,8 @@ function cambiarEstatus($id, $estatus){
 }
 
 function verGrupo($id){
-	//$mysqli = new mysqli('localhost', 'preparac_reguIPN', ',+.^ZV[PvE.P]+keKM', 'preparac_regularizacion');
-	$mysqli = new mysqli('localhost', 'root', 'root', 'preparac_regularizacion');
+	$mysqli = new mysqli('localhost', 'preparac_reguIPN', ',+.^ZV[PvE.P]+keKM', 'preparac_regularizacion');
+	//$mysqli = new mysqli('localhost', 'root', 'root', 'preparac_regularizacion');
 
 	$result = $mysqli->query("Select GRUPO.idGrupo, SUCURSAL.nombre as sucursal, CURSO.nombre as curso, GRUPO.nombre as grupo, GRUPO.capacidad, GRUPO.costo, GRUPO.periodoInscripcion as inscripcion from GRUPO join SUCURSAL on SUCURSAL.idSucursal = GRUPO.SUCURSAL_idsucursal join CURSO on GRUPO.CURSO_idcurso = CURSO.idCurso where GRUPO.idGrupo = $id;");
 
@@ -171,8 +171,8 @@ function verGrupo($id){
 }
 
 function getGrupoEditar($id){
-	//$mysqli = new mysqli('localhost', 'preparac_reguIPN', ',+.^ZV[PvE.P]+keKM', 'preparac_regularizacion');
-	$mysqli = new mysqli('localhost', 'root', 'root', 'preparac_regularizacion');
+	$mysqli = new mysqli('localhost', 'preparac_reguIPN', ',+.^ZV[PvE.P]+keKM', 'preparac_regularizacion');
+	//$mysqli = new mysqli('localhost', 'root', 'root', 'preparac_regularizacion');
 
 	$result = $mysqli->query("Select * from GRUPO where idGrupo = $id;");
 	$mysqli->close();
@@ -192,8 +192,8 @@ function getGrupoEditar($id){
 }
 
 function buscarGrupoPorCurso($idCurso){
-	//$mysqli = new mysqli('localhost', 'preparac_reguIPN', ',+.^ZV[PvE.P]+keKM', 'preparac_regularizacion');
-	$mysqli = new mysqli('localhost', 'root', 'root', 'preparac_regularizacion');
+	$mysqli = new mysqli('localhost', 'preparac_reguIPN', ',+.^ZV[PvE.P]+keKM', 'preparac_regularizacion');
+	//$mysqli = new mysqli('localhost', 'root', 'root', 'preparac_regularizacion');
 	$result = $mysqli->query("Select * from GRUPO where CURSO_idcurso = $idCurso;");
 	$mysqli->close();
 	if($row = $result->fetch_array()){
@@ -205,8 +205,8 @@ function buscarGrupoPorCurso($idCurso){
 }
 
 function buscarGrupoPorSucursal($idSucursal){
-	//$mysqli = new mysqli('localhost', 'preparac_reguIPN', ',+.^ZV[PvE.P]+keKM', 'preparac_regularizacion');
-	$mysqli = new mysqli('localhost', 'root', 'root', 'preparac_regularizacion');
+	$mysqli = new mysqli('localhost', 'preparac_reguIPN', ',+.^ZV[PvE.P]+keKM', 'preparac_regularizacion');
+	//$mysqli = new mysqli('localhost', 'root', 'root', 'preparac_regularizacion');
 	$result = $mysqli->query("Select * from GRUPO where SUCURSAL_idsucursal = $idSucursal;");
 	$mysqli->close();
 	if($row = $result->fetch_array()){
@@ -219,8 +219,8 @@ function buscarGrupoPorSucursal($idSucursal){
 
 function mostrarClases($idGrupo){
 
-	$conn = new mysqli("localhost", "root", "root", "preparac_regularizacion");
-		//$conn = new mysqli('localhost', 'preparac_reguIPN', ',+.^ZV[PvE.P]+keKM', 'preparac_regularizacion');
+	//$conn = new mysqli("localhost", "root", "root", "preparac_regularizacion");
+		$conn = new mysqli('localhost', 'preparac_reguIPN', ',+.^ZV[PvE.P]+keKM', 'preparac_regularizacion');
 		//linea para escapar acentos
 	mysqli_query($conn, "SET NAMES 'utf8'");
 
@@ -242,8 +242,8 @@ function mostrarClases($idGrupo){
 }
 
 function obtenerInformacionGrupo($idGrupo){
-	$conn = new mysqli("localhost", "root", "root", "preparac_regularizacion");
-		//$conn = new mysqli('localhost', 'preparac_reguIPN', ',+.^ZV[PvE.P]+keKM', 'preparac_regularizacion');
+	//$conn = new mysqli("localhost", "root", "root", "preparac_regularizacion");
+		$conn = new mysqli('localhost', 'preparac_reguIPN', ',+.^ZV[PvE.P]+keKM', 'preparac_regularizacion');
 		//linea para escapar acentos
 	mysqli_query($conn, "SET NAMES 'utf8'");
 
@@ -265,8 +265,8 @@ function obtenerInformacionGrupo($idGrupo){
 }
 
 function mostrarTodosGrup(){
-	$conn = new mysqli("localhost", "root", "root", "preparac_regularizacion");
-		//$conn = new mysqli('localhost', 'preparac_reguIPN', ',+.^ZV[PvE.P]+keKM', 'preparac_regularizacion');
+	//$conn = new mysqli("localhost", "root", "root", "preparac_regularizacion");
+		$conn = new mysqli('localhost', 'preparac_reguIPN', ',+.^ZV[PvE.P]+keKM', 'preparac_regularizacion');
 
 	if (mysqli_connect_errno()) {
 		printf("Conexion fallida: %s\n", mysqli_connect_error());
@@ -286,16 +286,16 @@ function mostrarTodosGrup(){
 }
 
 function editarGrupo($idGrupo, $grupo, $capacidad, $costo, $periodoInscripcion, $fechaPago, $idSucursal, $idCurso){
-	//$mysqli = new mysqli('localhost', 'preparac_reguIPN', ',+.^ZV[PvE.P]+keKM', 'preparac_regularizacion');
-	$mysqli = new mysqli('localhost', 'root', 'root', 'preparac_regularizacion');
+	$mysqli = new mysqli('localhost', 'preparac_reguIPN', ',+.^ZV[PvE.P]+keKM', 'preparac_regularizacion');
+	//$mysqli = new mysqli('localhost', 'root', 'root', 'preparac_regularizacion');
 	$result = $mysqli->query("UPDATE GRUPO SET nombre = '$grupo', capacidad = '$capacidad', costo = '$costo', periodoInscripcion = '$periodoInscripcion', fechaPago = '$fechaPago', SUCURSAL_idsucursal = '$idSucursal', CURSO_idcurso = '$idCurso' WHERE idGrupo = $idGrupo;");
 	$mysqli->close();
 	return $result;
 }
 
 function gruposDeUsuario($id){
-	//$mysqli = new mysqli('localhost', 'preparac_reguIPN', ',+.^ZV[PvE.P]+keKM', 'preparac_regularizacion');
-	$mysqli = new mysqli('localhost', 'root', 'root', 'preparac_regularizacion');
+	$mysqli = new mysqli('localhost', 'preparac_reguIPN', ',+.^ZV[PvE.P]+keKM', 'preparac_regularizacion');
+	//$mysqli = new mysqli('localhost', 'root', 'root', 'preparac_regularizacion');
 	$result = $mysqli->query("SELECT GRUPO_idgrupo from GRUPO_has_USUARIO WHERE USUARIO_idusuario = $id;");
 	
 	$idGrupos = array();
@@ -320,7 +320,7 @@ function gruposDeUsuario($id){
 
 function mostrarGruposClase($idCurso){
 		$conn = new mysqli('localhost', 'preparac_reguIPN', ',+.^ZV[PvE.P]+keKM', 'preparac_regularizacion');
-		//$conn = new mysqli("localhost", "root", "root", "preparac_regularizacion");
+		////$conn = new mysqli("localhost", "root", "root", "preparac_regularizacion");
 
 		if (mysqli_connect_errno()) {
 		    printf("Conexion fallida: %s\n", mysqli_connect_error());
