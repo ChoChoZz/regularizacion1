@@ -128,4 +128,17 @@ function registrarPago($idPago, $cantidad){
 	}
 }
 
+function pagosComprobante($idUsuario, $idGrupo){
+	$conn = new mysqli("localhost", "root", "root", "preparac_regularizacion");
+	//$conn = new mysqli('localhost', 'preparac_reguIPN', ',+.^ZV[PvE.P]+keKM', 'preparac_regularizacion');
+
+	$result = $conn->query("SELECT monto FROM PAGO WHERE USUARIO_idusuario = $idUsuario AND GRUPO_idgrupo = $idGrupo;");
+	$conn->close();
+	if($row = $result->fetch_array()){
+		return $row['monto'];
+	}
+	else{
+		return false;
+	}
+}
 ?>

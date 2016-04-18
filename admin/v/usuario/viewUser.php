@@ -354,6 +354,36 @@ else{
         </div>
       </div>
 
+      <div id="comprobante"  class="modal fade" tabindex="-1" role="dialog" aria-labelledby="comprobante">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="exampleModalLabel">Comprobante de pago</h4>
+              </div>
+              <div class="modal-body">
+              <label>Selecciona un servicio</label>
+              <br>
+              <table class="table admin-form theme-warning tc-checkbox-1 fs13">
+                <thead>
+                  <tr>
+                    <th>Nombre del servicio</th>
+                    <th>Monto registrado</th>
+                    <th>Seleccionar</th>
+                  </tr>
+                </thead>
+                <tbody id="tablaComprobante">
+                </tbody>
+              </table>
+             </div>
+             <div class="modal-footer">
+              <button type="button" class="btn btn-system" onclick="generarPDF();">Aceptar</button>
+              <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+            </div> 
+          </div>
+        </div>
+      </div>
+
     </div>
     <!-- End: Main -->
 
@@ -420,6 +450,8 @@ else{
 
     <script type="text/javascript">
       idEliminar = 0;
+      idComprobante = 0;
+      grupos = null;
       function mostrarPagos(idUsuario){
         $.ajax({
           type: "POST",
@@ -495,7 +527,6 @@ else{
               document.getElementById('direccion').innerHTML = '';
               document.getElementById('gruposUsuario').innerHTML = '';
             if(resp){
-              console.log(resp);
               var datos = resp.split('|');
               var nombreCompleto = document.getElementById('nombreCompleto');
               var sexo = document.getElementById('sexo');
@@ -555,6 +586,55 @@ else{
         window.location = "../../c/editarUsuario.php?id="+id;
       }
 
+      function generarComprobante(id){
+        idComprobante = id;
+        $.ajax({
+          url: "../../c/datosModalComprobante.php",
+          async: true,
+          method: "POST",
+          data: {'id': id},
+          success: function(resp){
+            var datos = resp.split("*");
+            var idGrupos = datos[0].split("¬");
+            var grupos = datos[1].split("¬");
+            var pagos = datos[2].split("¬");
+            var tabla = document.getElementById("tablaComprobante");
+            var str = "";
+
+            for(i=0; i<idGrupos.length; i++){
+              str += '<tr><td>'+grupos[i]+'</td><td>'+pagos[i]+'</td><td><input type="checkbox" value="'+idGrupos[i]+'" name="idGruposModal"></td></tr>';
+            }
+            tabla.innerHTML = str;
+            $("#comprobante").modal("show"); 
+          }
+        });
+      }
+
+      function generarPDF(){
+        $("#comprobante").modal("hide");
+        var idGrupos = document.getElementsByName('idGruposModal');
+        var j = 0;
+        grupos = new Array();
+        for(i=0; i<idGrupos.length; i++){
+          if(idGrupos[i].checked){
+            grupos[j] = idGrupos[i].value;
+            j++;
+          }
+        }
+        grupos = grupos.join("¬");
+        var datos = {'idUsuario': idComprobante, 'grupos': grupos};
+        $.ajax({
+          url: '../../c/comprobante.php',
+          async: true,
+          data: datos,
+          method: "POST",
+          success: function(resp){
+            if(grupos[0]){
+              window.open("../../c/comprobante.php?idUsuario="+idComprobante+"&grupos="+grupos);
+            }
+          }
+        });
+      }
     </script>
 
   </body>

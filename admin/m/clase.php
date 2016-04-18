@@ -90,4 +90,28 @@ function editarClase($idClase, $clase, $fecha, $horaInicio, $horaFin){
 	$mysqli->close();
 	return $result;
 }
+
+function clasesComprobante($idGrupo){
+	//$mysqli = new mysqli('localhost', 'preparac_reguIPN', ',+.^ZV[PvE.P]+keKM', 'preparac_regularizacion');
+	$mysqli = new mysqli('localhost', 'root', 'root', 'preparac_regularizacion');
+	$result = $mysqli->query("SELECT fecha, horaInicio, horaFin FROM CLASE WHERE GRUPO_idgrupo = $idGrupo;");
+	
+	$fecha = array();
+	$horaInicio = array();
+	$horaFin = array();
+	$i=0;
+	while($row = $result->fetch_array()){
+		$fecha[$i] = $row['fecha'];
+		$horaInicio[$i] = $row['horaInicio'];
+		$horaFin[$i] = $row['horaFin'];
+		$i++;
+	}
+	$mysqli->close();
+	if($fecha[0]){
+		return array($fecha, $horaInicio, $horaFin);
+	}
+	else{
+		return false;
+	}
+}
 ?>
